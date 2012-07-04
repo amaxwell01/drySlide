@@ -1,0 +1,27 @@
+#drySlideContainer {
+    border: solid 1px #bada55;
+    float: left;
+    height: 102px;
+    overflow: hidden;
+    position: relative;
+    width: 714px;
+}
+#drySlides {
+    height: 120px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 99999999px;
+}
+#drySlides li {
+    border: solid 1px #bada55;
+    display: inline-block;
+    float: left;
+    height: 100px;
+    width: 100px;
+}
+#drySlides li.selected {
+    border: solid 1px #f00;
+}

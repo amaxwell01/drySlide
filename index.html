@@ -1,0 +1,46 @@
+<html>
+<head>
+    <title>drySlides</title>
+    <link type="text/css" rel="stylesheet" href="styles.css" />
+    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="dryslides.js"></script>
+    <script>
+        $(document).ready(function(){
+            drySlide({
+                mainSlide    : 4,
+                speed        : 200, // this is in milliseconds
+                startFrame   : 0, // the start frame activated
+                visibleCount : 7,
+            });
+        });
+    </script>
+</head>
+<body>
+
+
+
+<button id="dryPreviousSlide" type="button">Previous Photo</button>
+<button id="dryNextSlide" type="button">Next Photo</button>
+
+<!--
+    data-current is for the start frame in the gallery
+
+-->
+<div id="drySlideContainer" data-current="0">
+    <ul id="drySlides">
+        <li><img src="http://placehold.it/100x100&text=slide+1" /></li>
+        <li><img src="http://placehold.it/100x100&text=slide+2" /></li>
+        <li><img src="http://placehold.it/100x100&text=slide+3" /></li>
+        <li><img src="http://placehold.it/100x100&text=slide+4" /></li>
+        <li><img src="http://placehold.it/100x100&text=slide+5" /></li>
+        <li><img src="http://placehold.it/100x100&text=slide+6" /></li>
+        <li><img src="http://placehold.it/100x100&text=slide+7" /></li>
+        <li><img src="http://placehold.it/100x100&text=slide+8" /></li>
+        <li><img src="http://placehold.it/100x100&text=slide+9" /></li>
+        <li><img src="http://placehold.it/100x100&text=slide+10" /></li>
+        <li><img src="http://placehold.it/100x100&text=slide+11" /></li>
+        <li><img src="http://placehold.it/100x100&text=slide+12" /></li>
+    </ul>
+</div>
+</body>
