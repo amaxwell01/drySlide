@@ -1,3 +1,5 @@
+
+/*=== PREVIOUS AND NEXT BUTTONS ==*/
 #dryPreviousSlide,
 #dryNextSlide
 {
@@ -8,11 +10,33 @@
     margin: 30px 10px 0;
     width: 106px;
 }
+#dryPreviousSlide {
+    clear: both;
+}
 #dryPreviousSlide:hover,
 #dryNextSlide:hover
 {
     background: rgba(0, 0, 0, 0.15);
 }
+
+
+/*=== CONTENT CONTAINER ===*/
+#dryContentContainer {
+    border: solid 1px #bada55;
+    float: left;
+    height: 600px;
+    width: 600px;
+}
+#dryContent li {
+    display: none;
+}
+#dryContent li.selected {
+    display: inline-block;
+}
+
+
+
+
 #drySlideContainer {
     border: solid 2px #CCC;
     float: left;
