@@ -1,5 +1,20 @@
+#dryPreviousSlide,
+#dryNextSlide
+{
+    float: left;
+    background: rgba(0, 0, 0, 0.08);
+    border: solid 2px #CCC;
+    height: 36px;
+    margin: 30px 10px 0;
+    width: 106px;
+}
+#dryPreviousSlide:hover,
+#dryNextSlide:hover
+{
+    background: rgba(0, 0, 0, 0.15);
+}
 #drySlideContainer {
-    border: solid 1px #bada55;
+    border: solid 2px #CCC;
     float: left;
     height: 102px;
     overflow: hidden;
@@ -16,12 +31,14 @@
     width: 99999999px;
 }
 #drySlides li {
-    border: solid 1px #bada55;
+    border: solid 1px transparent;
     display: inline-block;
     float: left;
     height: 100px;
+    opacity: .5;
     width: 100px;
 }
 #drySlides li.selected {
-    border: solid 1px #f00;
+    border: solid 1px transparent;
+    opacity: 1;
 }
