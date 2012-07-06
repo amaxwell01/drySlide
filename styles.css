@@ -27,11 +27,38 @@
     height: 600px;
     width: 600px;
 }
+#dryContent {
+    position: relative;
+}
 #dryContent li {
     display: none;
 }
 #dryContent li.selected {
-    display: inline-block;
+    display: block;
+    left: 0;
+    position: absolute;
+    top: 0;
+}
+
+
+/*=== COPY CONTENT CONTAINER ===*/
+#dryCopyContentContainer {
+    border: solid 1px #bada55;
+    float: left;
+    height: 600px;
+    width: 600px;
+}
+#dryCopyContent {
+    position: relative;
+}
+#dryCopyContent li {
+    display: none;
+}
+#dryCopyContent li.selected {
+    display: block;
+    left: 0;
+    position: absolute;
+    top: 0;
 }
 
 

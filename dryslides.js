@@ -3,6 +3,7 @@ var drySlide = function( args ) {
     var slideContainer = $('#drySlideContainer');
     var slideItems   = $('#drySlides li');
     var contentItems = $('#dryContent li');
+    var copyContentItems = $('#dryCopyContent li');
     var slideCount   = slideItems.length;
     var speed        = args.speed ? args.speed : 'slow';
     var startFrame   = args.startFrame ? args.startFrame : 0;
@@ -14,11 +15,23 @@ var drySlide = function( args ) {
     var displayContent = function( slide ) {
         
         // Hide all content items
-        $( contentItems).fadeOut();
+        $( contentItems).removeClass('selected');
+        $( contentItems).fadeOut(500);
         
         
         // Show the content for the given slide
-        $( contentItems + '[data-content="' + slide + '"]').fadeIn();
+        $( contentItems + '[data-content="' + slide + '"]').addClass('selected');
+        $( contentItems + '[data-content="' + slide + '"]').fadeIn(500);
+        
+        
+        // Hide all content items
+        $( copyContentItems).removeClass('selected');
+        $( copyContentItems).fadeOut(500);
+        
+        
+        // Show the content for the given slide
+        $( copyContentItems + '[data-content="' + slide + '"]').addClass('selected');
+        $( copyContentItems + '[data-content="' + slide + '"]').fadeIn(500);
     };
     
     
@@ -35,7 +48,11 @@ var drySlide = function( args ) {
         $(value).attr('data-content', index)
     });
     
-    //Get the number of visible items that will be seen to the user
+    // Iterate over all of the content items and give them a data-content number
+    $.each(copyContentItems, function( index, value ) {
+        $(value).attr('data-content', index)
+    });
+    
     
     
     //assign an onclick function to the previous and next buttons
@@ -63,6 +80,7 @@ var drySlide = function( args ) {
         {
             slideContainer.attr('data-current', currentSlide);
             selectSlideItem( currentSlide - 1, 'button' );
+            displayContent( currentSlide - 1 );
         }
     };
     
@@ -105,6 +123,7 @@ var drySlide = function( args ) {
         {
             slideContainer.attr('data-current', currentSlide + 1 );
             selectSlideItem( currentSlide, 'button' );
+            displayContent( currentSlide );
         }
     };
     
