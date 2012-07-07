@@ -1,7 +1,7 @@
 
 /*=== PREVIOUS AND NEXT BUTTONS ==*/
-#dryPreviousSlide,
-#dryNextSlide
+.dryPreviousSlide,
+.dryNextSlide
 {
     float: left;
     background: rgba(0, 0, 0, 0.08);
@@ -10,30 +10,30 @@
     margin: 30px 10px 0;
     width: 106px;
 }
-#dryPreviousSlide {
+.dryPreviousSlide {
     clear: both;
 }
-#dryPreviousSlide:hover,
-#dryNextSlide:hover
+.dryPreviousSlide:hover,
+.dryNextSlide:hover
 {
     background: rgba(0, 0, 0, 0.15);
 }
 
 
 /*=== CONTENT CONTAINER ===*/
-#dryContentContainer {
+.dryContentContainer {
     border: solid 1px #bada55;
     float: left;
     height: 600px;
     width: 600px;
 }
-#dryContent {
+.dryContent {
     position: relative;
 }
-#dryContent li {
+.dryContent li {
     display: none;
 }
-#dryContent li.selected {
+.dryContent li.selected {
     display: block;
     left: 0;
     position: absolute;
@@ -42,19 +42,19 @@
 
 
 /*=== COPY CONTENT CONTAINER ===*/
-#dryCopyContentContainer {
+.dryCopyContentContainer {
     border: solid 1px #bada55;
     float: left;
     height: 600px;
     width: 600px;
 }
-#dryCopyContent {
+.dryCopyContent {
     position: relative;
 }
-#dryCopyContent li {
+.dryCopyContent li {
     display: none;
 }
-#dryCopyContent li.selected {
+.dryCopyContent li.selected {
     display: block;
     left: 0;
     position: absolute;
@@ -64,7 +64,7 @@
 
 
 
-#drySlideContainer {
+.drySlideContainer {
     border: solid 2px #CCC;
     float: left;
     height: 102px;
@@ -72,7 +72,7 @@
     position: relative;
     width: 714px;
 }
-#drySlides {
+.drySlides {
     height: 120px;
     left: 0;
     margin: 0;
@@ -81,7 +81,7 @@
     top: 0;
     width: 99999999px;
 }
-#drySlides li {
+.drySlides li {
     border: solid 1px transparent;
     display: inline-block;
     float: left;
@@ -89,7 +89,7 @@
     opacity: .5;
     width: 100px;
 }
-#drySlides li.selected {
+.drySlides li.selected {
     border: solid 1px transparent;
     opacity: 1;
 }

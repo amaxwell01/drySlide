@@ -1,15 +1,27 @@
 var drySlide = function( args ) {
+    var id               = args.id ? args.id : 'drySlide_';
     
-    var slideContainer = $('#drySlideContainer');
-    var slideItems   = $('#drySlides li');
-    var contentItems = $('#dryContent li');
-    var copyContentItems = $('#dryCopyContent li');
-    var slideCount   = slideItems.length;
-    var speed        = args.speed ? args.speed : 'slow';
-    var startFrame   = args.startFrame ? args.startFrame : 0;
-    var mainSlide    = args.mainSlide ? args.mainSlide : 0;
-    var beginningSlides = slideCount - mainSlide;
-    var firstChunk      = slideCount - beginningSlides;
+    
+    // Assign the id to the elements
+    $('.drySlideContainer[data-id="' + id + '"]').attr('id', id + '_drySlideContainer');
+    $('.drySlideContainer[data-id="' + id + '"]').children('.drySlides').attr('id', id + '_drySlides');
+    $('.dryContentContainer[data-id="' + id + '"]').attr('id', id + '_dryContentContainer');
+    $('.dryContentContainer[data-id="' + id + '"]').children('.dryContent').attr('id', id + '_dryContent');
+    $('.dryCopyContentContainer[data-id="' + id + '"]').attr('id', id + '_dryCopyContentContainer');
+    $('.dryCopyContentContainer[data-id="' + id + '"]').children('.dryCopyContent').attr('id', id + '_dryCopyContent');
+    $('.dryPreviousSlide[data-id="' + id + '"]').attr('id', id + '_dryPreviousSlide');
+    $('.dryNextSlide[data-id="' + id + '"]').attr('id', id + '_dryNextSlide');
+
+    var slideContainer   = $('#' + id + '_drySlideContainer.drySlideContainer');
+    var slideItems       = $('#' + id + '_drySlides.drySlides li');
+    var contentItems     = $('#' + id + '_dryContent.dryContent li');
+    var copyContentItems = $('#' + id + '_dryCopyContent.dryCopyContent li');
+    var slideCount       = slideItems.length;
+    var speed            = args.speed ? args.speed : 'slow';
+    var startFrame       = args.startFrame ? args.startFrame : 0;
+    var mainSlide        = args.mainSlide ? args.mainSlide : 0;
+    var beginningSlides  = slideCount - mainSlide;
+    var firstChunk       = slideCount - beginningSlides;
     
      // Add the slide content to the content container
     var displayContent = function( slide ) {
@@ -18,18 +30,15 @@ var drySlide = function( args ) {
         $( contentItems).removeClass('selected');
         $( contentItems).fadeOut(500);
         
-        
         // Show the content for the given slide
         $( contentItems + '[data-content="' + slide + '"]').addClass('selected');
         $( contentItems + '[data-content="' + slide + '"]').fadeIn(500);
         
-        
-        // Hide all content items
+        // Hide all copy content items
         $( copyContentItems).removeClass('selected');
         $( copyContentItems).fadeOut(500);
         
-        
-        // Show the content for the given slide
+        // Show the copy content for the given slide
         $( copyContentItems + '[data-content="' + slide + '"]').addClass('selected');
         $( copyContentItems + '[data-content="' + slide + '"]').fadeIn(500);
     };
@@ -54,13 +63,12 @@ var drySlide = function( args ) {
     });
     
     
-    
     //assign an onclick function to the previous and next buttons
-    $('#dryPreviousSlide').on('click', function() {
+    $('#' + id + '_dryPreviousSlide.dryPreviousSlide').on('click', function() {
         previousSlide();
     });
     
-    $('#dryNextSlide').on('click', function() {
+    $('#' + id + '_dryNextSlide.dryNextSlide').on('click', function() {
         nextSlide();
     });
     
@@ -102,7 +110,7 @@ var drySlide = function( args ) {
             if( currentSlide < ( slideCount - ( mainSlide - 1) ) )
             {
                 slideContainer.attr('data-middle', middleSlide + 1 );
-                $('#drySlides').animate({ 'left': '-=102px'}, speed );
+                $('#' + id + '_drySlides.drySlides').animate({ 'left': '-=102px'}, speed );
             }            
         }
         else
@@ -111,7 +119,7 @@ var drySlide = function( args ) {
               )
             {
                 slideContainer.attr('data-middle', middleSlide - 1 );
-                $('#drySlides').animate({ 'left': '+=102px'}, speed );
+                $('#' + id + '_drySlides.drySlides').animate({ 'left': '+=102px'}, speed );
             }
         }
     };

@@ -8,6 +8,7 @@
     <script>
         $(document).ready(function(){
             drySlide({
+                id           : 'drySlide',
                 mainSlide    : 4,
                 speed        : 200, // this is in milliseconds
                 startFrame   : 0, // the start frame activated
@@ -19,8 +20,8 @@
 <body>
 
 
-<div id="dryContentContainer">
-    <ul id="dryContent">
+<div class="dryContentContainer" data-id="drySlide">
+    <ul class="dryContent">
         <li>Content 1</li>
         <li>Content 2</li>
         <li>Content 3</li>
@@ -36,31 +37,32 @@
     </ul>
 </div>
 
-<div id="dryCopyContentContainer">
-    <ul id="dryCopyContent">
-        <li>Content 1</li>
-        <li>Content 2</li>
-        <li>Content 3</li>
-        <li>Content 4</li>
-        <li>Content 5</li>
-        <li>Content 6</li>
-        <li>Content 7</li>
-        <li>Content 8</li>
-        <li>Content 9</li>
-        <li>Content 10</li>
-        <li>Content 11</li>
-        <li>Content 12</li>
+<div class="dryCopyContentContainer" data-id="drySlide">
+    <ul class="dryCopyContent">
+        <li>Copy Content 1</li>
+        <li>Copy Content 2</li>
+        <li>Copy Content 3</li>
+        <li>Copy Content 4</li>
+        <li>Copy Content 5</li>
+        <li>Copy Content 6</li>
+        <li>Copy Content 7</li>
+        <li>Copy Content 8</li>
+        <li>Copy Content 9</li>
+        <li>Copy Content 10</li>
+        <li>Copy Content 11</li>
+        <li>Copy Content 12</li>
     </ul>
 </div>
 
-<button id="dryPreviousSlide" type="button">Previous Photo</button>
+<button class="dryPreviousSlide" type="button" data-id="drySlide">Previous Photo</button>
 
 <!-- 
 // data-current is for the start frame in the gallery
+// data-id is the dedicated ID for each drySlide deployment
 //
 -->
-<div id="drySlideContainer" data-current="0">
-    <ul id="drySlides">
+<div class="drySlideContainer" data-current="0" data-id="drySlide">
+    <ul class="drySlides">
         <li><img src="http://placehold.it/100x100&text=slide+1" /></li>
         <li><img src="http://placehold.it/100x100&text=slide+2" /></li>
         <li><img src="http://placehold.it/100x100&text=slide+3" /></li>
@@ -76,6 +78,6 @@
     </ul>
 </div>
 
-<button id="dryNextSlide" type="button">Next Photo</button>
+<button class="dryNextSlide" type="button" data-id="drySlide">Next Photo</button>
 
 </body>
