@@ -11,13 +11,17 @@ var drySlide = function( args ) {
     $('.dryCopyContentContainer[data-id="' + id + '"]').children('.dryCopyContent').attr('id', id + '_dryCopyContent');
     $('.dryPreviousSlide[data-id="' + id + '"]').attr('id', id + '_dryPreviousSlide');
     $('.dryNextSlide[data-id="' + id + '"]').attr('id', id + '_dryNextSlide');
+    $('.drySlideNavigation[data-id="' + id + '"]').attr('id', id + '_drySlideNavigation');
+
 
     var slideContainer   = $('#' + id + '_drySlideContainer.drySlideContainer');
     var slideItems       = $('#' + id + '_drySlides.drySlides li');
     var contentItems     = $('#' + id + '_dryContent.dryContent li');
     var copyContentItems = $('#' + id + '_dryCopyContent.dryCopyContent li');
+    var navigationContainer  = $('#' + id + '_drySlideNavigation');
     var slideCount       = slideItems.length;
     var slideWidth       = args.slideWidth ? args.slideWidth : 0;
+    var navigation           = args.navigation ? args.navigation : false;
     var speed            = args.speed ? args.speed : 'slow';
     var startFrame       = args.startFrame ? args.startFrame : 0;
     var mainSlide        = args.mainSlide ? args.mainSlide : 0;
@@ -146,6 +150,15 @@ var drySlide = function( args ) {
         selectSlideItem( slide, 'click' );
         displayContent( slide );
     });
+    
+    
+    // Slide Navigation
+    // Show the navigation dots for the number of slides
+    if( navigation )
+    {
+        for( var i = 0; i <= contentItems.length; i++ )
+        {
+            $(navigationContainer).append( '<li></li>');
+        }
+    }
 };
-
-
