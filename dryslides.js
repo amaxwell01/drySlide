@@ -16,6 +16,7 @@ var drySlide = function( args ) {
 
     var slideContainer   = $('#' + id + '_drySlideContainer.drySlideContainer');
     var slideItems       = $('#' + id + '_drySlides.drySlides li');
+    var content          = $('#' + id + '_dryContent.dryContent');
     var contentItems     = $('#' + id + '_dryContent.dryContent li');
     var copyContentItems = $('#' + id + '_dryCopyContent.dryCopyContent li');
     var navigationContainer  = $('#' + id + '_drySlideNavigation');
@@ -156,9 +157,34 @@ var drySlide = function( args ) {
     // Show the navigation dots for the number of slides
     if( navigation )
     {
-        for( var i = 0; i <= contentItems.length; i++ )
+        for( var i = 0; i < contentItems.length; i++ )
         {
-            $(navigationContainer).append( '<li></li>');
+            // Add the selected Class to the startFrame
+            if( i === startFrame )
+            {
+                $(navigationContainer).append( '<li data-item=' + i + ' class="selected"></li>');
+            }
+            else
+            {
+                $(navigationContainer).append( '<li data-item=' + i + '></li>');
+            }
         }
     }
+    
+    // Slide Navigation
+    // Click on a navigation dot to change tabs
+    $(navigationContainer).children('li').on('click', function() {
+        var itemNumber = $(this).attr('data-item');
+    
+        // Change the class to selected for the clicked on navigation dot
+        $(this).parent().children('li').removeClass('selected');
+        $(this).addClass('selected');
+        
+        
+        // Change the selected content slide
+        $(contentItems).removeClass('selected');
+        $(content).children('li[data-content="' + itemNumber + '"]').addClass('selected');
+        
+        
+    });
 };

@@ -93,3 +93,25 @@
     border: solid 1px transparent;
     opacity: 1;
 }
+
+
+
+
+
+/*=== NAVIGATION ===*/
+.drySlideNavigation {
+    float: left;
+}
+.drySlideNavigation li {
+    background: #CCC;
+    webkit-border-radius: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    height: 10px;
+    margin: 0 5px 0 0;
+    padding: 0;
+    width: 10px;
+}
+.drySlideNavigation li.selected {
+    background: #666;
+}
