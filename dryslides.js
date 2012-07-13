@@ -17,7 +17,9 @@ var drySlide = function( args ) {
     var slideContainer   = $('#' + id + '_drySlideContainer.drySlideContainer');
     var slideItems       = $('#' + id + '_drySlides.drySlides li');
     var content          = $('#' + id + '_dryContent.dryContent');
+    var contentParent    = content.parent();
     var contentItems     = $('#' + id + '_dryContent.dryContent li');
+    var contentItemsCount = $('#' + id + '_dryContent.dryContent li').length;
     var copyContentItems = $('#' + id + '_dryCopyContent.dryCopyContent li');
     var navigationContainer  = $('#' + id + '_drySlideNavigation');
     var slideCount       = slideItems.length;
@@ -88,11 +90,11 @@ var drySlide = function( args ) {
     
     
     var previousSlide = function() {
-        var currentSlide   = parseInt(slideContainer.attr('data-current'));
+        var currentSlide   = parseInt(contentParent.attr('data-current'));
         
         if( currentSlide > 0 )
         {
-            slideContainer.attr('data-current', currentSlide);
+            contentParent.attr('data-current', currentSlide);
             selectSlideItem( currentSlide - 1, 'button' );
             displayContent( currentSlide - 1 );
         }
@@ -109,7 +111,7 @@ var drySlide = function( args ) {
         // Add the selected class to the selected slide           
         $( slideItems[ currentSlide ] ).addClass('selected');
         
-        slideContainer.attr('data-current', currentSlide );
+        contentParent.attr('data-current', currentSlide );
         
         if( currentSlide > (middleSlide - 1) )
         {
@@ -131,11 +133,11 @@ var drySlide = function( args ) {
     };
     
     var nextSlide = function() {
-        var currentSlide   = parseInt(slideContainer.attr('data-current')) + 1;
+        var currentSlide   = parseInt(contentParent.attr('data-current')) + 1;
         
-        if( currentSlide < slideCount )
+        if( currentSlide < contentItemsCount )
         {
-            slideContainer.attr('data-current', currentSlide + 1 );
+            contentParent.attr('data-current', currentSlide + 1 );
             selectSlideItem( currentSlide, 'button' );
             displayContent( currentSlide );
         }
@@ -175,16 +177,17 @@ var drySlide = function( args ) {
     // Click on a navigation dot to change tabs
     $(navigationContainer).children('li').on('click', function() {
         var itemNumber = $(this).attr('data-item');
+        var currentSlide = parseInt(contentParent.attr('data-current')) + 1;
     
         // Change the class to selected for the clicked on navigation dot
         $(this).parent().children('li').removeClass('selected');
         $(this).addClass('selected');
         
-        
-        // Change the selected content slide
-        $(contentItems).removeClass('selected');
-        $(content).children('li[data-content="' + itemNumber + '"]').addClass('selected');
-        
-        
+        contentParent.attr('data-current', currentSlide + 1 );
+        selectSlideItem( itemNumber, 'button' );
+        displayContent( itemNumber );
     });
+    
+    
+    // Create a function which updates the current item for the previous/next/slide/content/copy/navigation so that everyone is on the same page... literally
 };
