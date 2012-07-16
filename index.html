@@ -11,7 +11,6 @@
                 id           : 'drySlide',
                 mainSlide    : 4,
                 navigation   : true,
-                slideWidth   : '102px',
                 speed        : 200, // this is in milliseconds
                 startFrame   : 0, // the start frame activated
                 visibleCount : 7
@@ -24,18 +23,18 @@
 
 <div class="dryContentContainer" data-id="drySlide">
     <ul class="dryContent">
-        <li>Content 1</li>
-        <li>Content 2</li>
-        <li>Content 3</li>
-        <li>Content 4</li>
-        <li>Content 5</li>
-        <li>Content 6</li>
-        <li>Content 7</li>
-        <li>Content 8</li>
-        <li>Content 9</li>
-        <li>Content 10</li>
-        <li>Content 11</li>
-        <li>Content 12</li>
+        <li><img src="http://placehold.it/600x400&text=slide+1" /></li>
+        <li><img src="http://placehold.it/600x400&text=slide+2" /></li>
+        <li><img src="http://placehold.it/600x400&text=slide+3" /></li>
+        <li><img src="http://placehold.it/600x400&text=slide+4" /></li>
+        <li><img src="http://placehold.it/600x400&text=slide+5" /></li>
+        <li><img src="http://placehold.it/600x400&text=slide+6" /></li>
+        <li><img src="http://placehold.it/600x400&text=slide+7" /></li>
+        <li><img src="http://placehold.it/600x400&text=slide+8" /></li>
+        <li><img src="http://placehold.it/600x400&text=slide+9" /></li>
+        <li><img src="http://placehold.it/600x400&text=slide+10" /></li>
+        <li><img src="http://placehold.it/600x400&text=slide+11" /></li>
+        <li><img src="http://placehold.it/600x400&text=slide+12" /></li>
     </ul>
 </div>
 
@@ -56,7 +55,7 @@
     </ul>
 </div>
 
-<button class="dryPreviousSlide" type="button" data-id="drySlide">Previous Photo</button>
+<button class="dryPreviousSlide" type="button" data-id="drySlide">Previous</button>
 
 <!-- 
 // data-current is for the start frame in the gallery
@@ -80,6 +79,9 @@
     </ul>
 </div>
 
-<button class="dryNextSlide" type="button" data-id="drySlide">Next Photo</button>
+<button class="dryNextSlide" type="button" data-id="drySlide">Next</button>
+
+<ul class="drySlideNavigation" data-id="drySlide">
+</ul>
 
 </body>

@@ -24,10 +24,13 @@
 .dryContentContainer {
     border: solid 1px #bada55;
     float: left;
-    height: 600px;
+    height: 400px;
     width: 600px;
 }
 .dryContent {
+    height: 400px;
+    margin: 0;
+    padding: 0;
     position: relative;
 }
 .dryContent li {
@@ -45,7 +48,7 @@
 .dryCopyContentContainer {
     border: solid 1px #bada55;
     float: left;
-    height: 600px;
+    height: 120px;
     width: 600px;
 }
 .dryCopyContent {
@@ -79,7 +82,6 @@
     padding: 0;
     position: absolute;
     top: 0;
-    width: 99999999px;
 }
 .drySlides li {
     border: solid 1px transparent;
@@ -106,6 +108,7 @@
     background: #CCC;
     webkit-border-radius: 5px;
     border-radius: 5px;
+    cursor: pointer;
     display: inline-block;
     height: 10px;
     margin: 0 5px 0 0;

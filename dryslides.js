@@ -1,5 +1,5 @@
 var drySlide = function( args ) {
-    var id               = args.id ? args.id : 'drySlide_';
+    var id  = args.id ? args.id : 'drySlide_';
     
     
     // Assign the id to the elements
@@ -23,7 +23,6 @@ var drySlide = function( args ) {
     var copyContentItems = $('#' + id + '_dryCopyContent.dryCopyContent li');
     var navigationContainer  = $('#' + id + '_drySlideNavigation');
     var slideCount       = slideItems.length;
-    var slideWidth       = args.slideWidth ? args.slideWidth : 0;
     var navigation           = args.navigation ? args.navigation : false;
     var speed            = args.speed ? args.speed : 'slow';
     var startFrame       = args.startFrame ? args.startFrame : 0;
@@ -39,35 +38,35 @@ var drySlide = function( args ) {
         $( contentItems).fadeOut(500);
         
         // Show the content for the given slide
-        $( contentItems + '[data-content="' + slide + '"]').addClass('selected');
-        $( contentItems + '[data-content="' + slide + '"]').fadeIn(500);
+        $( contentItems + '[data-item="' + slide + '"]').addClass('selected');
+        $( contentItems + '[data-item="' + slide + '"]').fadeIn(500);
         
         // Hide all copy content items
         $( copyContentItems).removeClass('selected');
         $( copyContentItems).fadeOut(500);
         
         // Show the copy content for the given slide
-        $( copyContentItems + '[data-content="' + slide + '"]').addClass('selected');
-        $( copyContentItems + '[data-content="' + slide + '"]').fadeIn(500);
+        $( copyContentItems + '[data-item="' + slide + '"]').addClass('selected');
+        $( copyContentItems + '[data-item="' + slide + '"]').fadeIn(500);
     };
     
     
     // Set the data-middle attribute on the slides
     slideContainer.attr('data-middle', mainSlide );
     
-    // Iterate over all of the slide items and give them a data-slide number
+    // Iterate over all of the slide items and give them a data-item number
     $.each(slideItems, function( index, value ) {
-        $(value).attr('data-slide', index)
+        $(value).attr('data-item', index)
     });
     
-    // Iterate over all of the content items and give them a data-content number
+    // Iterate over all of the content items and give them a data-item number
     $.each(contentItems, function( index, value ) {
-        $(value).attr('data-content', index)
+        $(value).attr('data-item', index)
     });
     
-    // Iterate over all of the content items and give them a data-content number
+    // Iterate over all of the content items and give them a data-item number
     $.each(copyContentItems, function( index, value ) {
-        $(value).attr('data-content', index)
+        $(value).attr('data-item', index)
     });
     
     
@@ -88,6 +87,9 @@ var drySlide = function( args ) {
     // Show the content for the startFrame
     displayContent( startFrame );
     
+    //Set the data-current on the content
+    // TODO - Add the ability to get the frame count from the url and use that instead of the startFrame
+    contentParent.attr('data-current', startFrame);
     
     var previousSlide = function() {
         var currentSlide   = parseInt(contentParent.attr('data-current'));
@@ -97,6 +99,7 @@ var drySlide = function( args ) {
             contentParent.attr('data-current', currentSlide);
             selectSlideItem( currentSlide - 1, 'button' );
             displayContent( currentSlide - 1 );
+            navigationSelection( currentSlide - 1 );
         }
     };
     
@@ -104,6 +107,9 @@ var drySlide = function( args ) {
     var selectSlideItem = function( currentSlide, call ) {
         var middle = mainSlide - 1;
         var middleSlide = parseInt( slideContainer.attr('data-middle') );
+        
+        var previousItem = parseInt( $(content).children('li.selected').attr('data-item') );
+        var slideWidth = $(slideContainer).children('.drySlides').children('li[data-item="0"]').outerWidth();
         
         // Remove the select class from all items
         $(slideItems).removeClass('selected');
@@ -113,13 +119,29 @@ var drySlide = function( args ) {
         
         contentParent.attr('data-current', currentSlide );
         
-        if( currentSlide > (middleSlide - 1) )
-        {
-            if( currentSlide < ( slideCount - ( mainSlide - 1) ) )
-            {
+        // If a user jumps around in the selection, it needs to animate accordingly to fill that gap
+        // vs just animating one slide
+        // If the slide item is greater than the (slideCount - (mainSlide - 1)), only animate to (slideCount - (mainSlide - 1))
+        // If the slide item is less than the (currentSlide >= (firstChunk - 1)), only animate to (firstChunk - 1)
+        
+        
+        var moveAmount = '';
+        if( currentSlide >= slideCount - (mainSlide - 1) ) {
+           moveAmount = Math.abs((currentSlide - previousItem )) * slideWidth + 'px';
+        }
+        else
+        if( currentSlide <= (firstChunk - 1) ) {
+            moveAmount = Math.abs((currentSlide - (firstChunk - 1) )) * slideWidth + 'px';
+        }
+        else {
+            moveAmount = Math.abs((currentSlide - previousItem )) * slideWidth + 'px';
+        }
+        
+        if( currentSlide > (middleSlide - 1) ) {
+            if( currentSlide < ( slideCount - ( mainSlide - 1) ) ) {
                 slideContainer.attr('data-middle', middleSlide + 1 );
-                $('#' + id + '_drySlides.drySlides').animate({ 'left': '-=' + slideWidth}, speed );
-            }            
+                $('#' + id + '_drySlides.drySlides').animate({ 'left': '-=' + moveAmount}, speed );
+            }
         }
         else
         if( currentSlide < (middleSlide - 1) ) {
@@ -127,7 +149,7 @@ var drySlide = function( args ) {
               )
             {
                 slideContainer.attr('data-middle', middleSlide - 1 );
-                $('#' + id + '_drySlides.drySlides').animate({ 'left': '+=' + slideWidth}, speed );
+                $('#' + id + '_drySlides.drySlides').animate({ 'left': '+=' + moveAmount}, speed );
             }
         }
     };
@@ -140,6 +162,7 @@ var drySlide = function( args ) {
             contentParent.attr('data-current', currentSlide + 1 );
             selectSlideItem( currentSlide, 'button' );
             displayContent( currentSlide );
+            navigationSelection( currentSlide );
         }
     };
     
@@ -148,7 +171,7 @@ var drySlide = function( args ) {
     // Add the onclick function to each slide item
     slideItems.on('click', function( event ) {
         var that = $(this);
-        var slide = parseInt( that.attr('data-slide') );
+        var slide = parseInt( that.attr('data-item') );
         
         selectSlideItem( slide, 'click' );
         displayContent( slide );
@@ -173,15 +196,24 @@ var drySlide = function( args ) {
         }
     }
     
+    
+    // Navigation selection
+    var navigationSelection = function( itemNumber )
+    {
+        // Change the class to selected for the clicked on navigation dot
+        $(navigationContainer).children('li').removeClass('selected');
+        
+        // Add the selected class to listen elementFromPoint
+        $(navigationContainer).children('li[data-item="' + itemNumber + '"]').addClass('selected');
+    }
+    
     // Slide Navigation
     // Click on a navigation dot to change tabs
     $(navigationContainer).children('li').on('click', function() {
-        var itemNumber = $(this).attr('data-item');
+        var itemNumber = parseInt( $(this).attr('data-item') );
         var currentSlide = parseInt(contentParent.attr('data-current')) + 1;
-    
-        // Change the class to selected for the clicked on navigation dot
-        $(this).parent().children('li').removeClass('selected');
-        $(this).addClass('selected');
+        
+        navigationSelection( itemNumber );
         
         contentParent.attr('data-current', currentSlide + 1 );
         selectSlideItem( itemNumber, 'button' );
