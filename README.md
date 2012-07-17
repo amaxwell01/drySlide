@@ -11,43 +11,47 @@ while also giving them more control on both the type of content that they add in
 
 
 
-How To Use drySlide
-//--------------------------------------------------------
+# How To Use drySlide
 
-// Main Content
-//--------------------------------------------------------
-<div class="dryContentContainer" data-id="<insert id here>">
-    <ul class="dryContent">
-        <li></li>
+## Main Content
+    <div class="dryContentContainer" data-id="<insert id here>">
+        <ul class="dryContent">
+            <li></li>
+        </ul>
+    </div>
+
+
+## Copy Content aka Secondary Content
+    <div class="dryCopyContentContainer" data-id="<insert id here>">
+        <ul class="dryCopyContent">            
+            <li></li>
+        </ul>
+    </div>
+
+
+## Slide Content
+    <div class="drySlideContainer" data-id="<insert id here>" data-middle="4">
+        <ul class="drySlides">
+            <li></li>
+        </ul>
+    </div>
+
+
+## Previous and Next Buttons
+    <button class="dryPreviousSlide" type="button" data-id="<insert id here>">Previous Photo</button>
+    <button class="dryNextSlide" type="button" data-id="<insert id here>">Next Photo</button>
+
+
+## Navigation Dots
+    <ul class="drySlideNavigation" data-id="<insert id here>">
     </ul>
-</div>
 
 
-// Copy Content aka Secondary Content
-//--------------------------------------------------------
-<div class="dryCopyContentContainer" data-id="<insert id here>">
-    <ul class="dryCopyContent">            
-        <li></li>
-    </ul>
-</div>
 
 
-// Slide Content
-//--------------------------------------------------------
-<div class="drySlideContainer" data-id="<insert id here>" data-middle="4">
-    <ul class="drySlides">
-        <li></li>
-    </ul>
-</div>
 
 
-// Previous and Next Buttons
-//--------------------------------------------------------
-<button class="dryPreviousSlide" type="button" data-id="<insert id here>">Previous Photo</button>
-<button class="dryNextSlide" type="button" data-id="<insert id here>">Next Photo</button>
 
 
-// Navigation Dots
-//--------------------------------------------------------
-<ul class="drySlideNavigation" data-id="<insert id here>">
-</ul>
+## Notes
+* Use something like [data-hash="blah"] if you want to override the default hash of #1, #2, #3 etc.
