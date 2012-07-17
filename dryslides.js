@@ -1,3 +1,11 @@
+/*
+* drySlide, A Gallery Plugin for jQuery
+* Intructions: https://github.com/amaxwell01/drySlide
+* By: Andrew Maxwell, http://www.andrewcmaxwell.com
+* Version: 0.1
+* Updated: July 17th, 2011
+*/
+
 var drySlide = function( args ) {
     var id  = args.id ? args.id : 'drySlide_';
     

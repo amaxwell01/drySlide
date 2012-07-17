@@ -1,8 +1,8 @@
-Q: What does drySlide stand for?:
+Q: What does drySlide stand for?:  
 A: drySlide actually stands for "Don't Repeat Yourself, Slide!". One of my mottos is to not repeat yourself and I feel like other developers feel like they
 are always repeating themself when working with code, and in this case galleries and slideshows.
 
-Q: Why did you build drySlide since there are hundreds of other slideshows and gallery plugins out there?
+Q: Why did you build drySlide since there are hundreds of other slideshows and gallery plugins out there?  
 A: I decided after working with galleries for almost 8 years that it was time to build something that I can actually use on client projects that fit my need. 
 I also figured that other developers can use a gallery/slideshow that actually gave them the functionaility that they need, when they need it, 
 while also giving them more control on both the type of content that they add into the gallery/slideshow as well as the semantic HTML code that is being used.
