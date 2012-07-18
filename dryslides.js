@@ -28,6 +28,7 @@ var drySlide = function( args ) {
     var contentItems     = $('#' + id + '_dryContent.dryContent li');
     var contentItemsCount    = $('#' + id + '_dryContent.dryContent li').length;
     var copyContentItems     = $('#' + id + '_dryCopyContent.dryCopyContent li');
+    var loop             = args.loop ? args.loop : false;
     var mainSlide        = args.mainSlide ? args.mainSlide : 0;
     var navigation       = args.navigation ? args.navigation : false;
     var navigationContainer  = $('#' + id + '_drySlideNavigation');
@@ -239,7 +240,7 @@ var drySlide = function( args ) {
     // Create a timer which can play through all of the slides
     if( timer ) {
         var i = 0;
-        setInterval(function(){
+        var interval = setInterval(function(){
             
             // Every time this interval runs, increment to the next slide
             // Once we get to the last slide, go back to the beginning if loop is set
@@ -250,8 +251,16 @@ var drySlide = function( args ) {
             // Increment the count
             i++;
             
-            if( i === (contentItemsCount) ){
-                i = 0;
+            if( loop ) {
+                if( i === (contentItemsCount) ){
+                    i = 0;
+                }
+            }
+            else {
+                if( i === (contentItemsCount) ){
+                    i = 0;
+                    clearInterval(interval);
+                }
             }
             
         },timerSpeed);
