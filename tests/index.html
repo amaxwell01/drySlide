@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>QUnit Example</title>
+    <link rel="stylesheet" href="qunit/qunit.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="qunit/qunit.js"></script>
+    <script src="../../dryslides.js"></script>
+    <script>
+        $(document).ready(function() {
+            test( "hello test", function() {
+                ok( 1 == "1", "Passed!" );
+                ok( 10 >= 9, "True value");
+            });
+            
+            test( "Display Content", function() {
+                ok( displayContent( 1 ), "Passed!" );
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="qunit"></div>
+</body>
+</html>
