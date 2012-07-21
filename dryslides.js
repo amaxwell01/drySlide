@@ -37,8 +37,9 @@ var drySlide = function( args ) {
     var mainSlide        = args.mainSlide ? args.mainSlide : 0;
     var beginningSlides  = slideCount - mainSlide;
     var firstChunk       = slideCount - beginningSlides;
+    var PrimaryContentAnimation = args.PrimaryContentAnimation ? args.PrimaryContentAnimation : 'slide-left';
     
-     // Add the slide content to the content container
+    // Add the slide content to the content container
     var displayContent = function( slide ) {
         
         // Hide all content items
@@ -56,6 +57,8 @@ var drySlide = function( args ) {
         // Show the copy content for the given slide
         $( copyContentItems + '[data-item="' + slide + '"]').addClass('selected');
         $( copyContentItems + '[data-item="' + slide + '"]').fadeIn(500);
+        
+        return true;
     };
     
     
@@ -227,6 +230,23 @@ var drySlide = function( args ) {
         selectSlideItem( itemNumber, 'button' );
         displayContent( itemNumber );
     });
+    
+    
+    // Primary Content Animation
+    // Change the way that the primary content animates
+    switch( PrimaryContentAnimation ) {
+        case 'slide-right':
+            // Slide the content to the left
+            break;
+        case 'slide-left':
+        default:
+            // Slide the content to the left
+            break;
+    }
+    
+    
+    // Setup SEO friendly linkable pages
+    // User the browser state API
     
     
     // Create a function which updates the current item for the previous/next/slide/content/copy/navigation so that everyone is on the same page... literally
