@@ -7,9 +7,9 @@
 */
 
 var drySlide = function( args ) {
+
     var id  = args.id ? args.id : 'drySlide_';
-    
-    
+
     // Assign the id to the elements
     $('.drySlideContainer[data-id="' + id + '"]').attr('id', id + '_drySlideContainer');
     $('.drySlideContainer[data-id="' + id + '"]').children('.drySlides').attr('id', id + '_drySlides');
@@ -22,22 +22,28 @@ var drySlide = function( args ) {
     $('.drySlideNavigation[data-id="' + id + '"]').attr('id', id + '_drySlideNavigation');
 
 
-    var slideContainer   = $('#' + id + '_drySlideContainer.drySlideContainer');
-    var slideItems       = $('#' + id + '_drySlides.drySlides li');
+    // Set variables
     var content          = $('#' + id + '_dryContent.dryContent');
     var contentParent    = content.parent();
     var contentItems     = $('#' + id + '_dryContent.dryContent li');
-    var contentItemsCount = $('#' + id + '_dryContent.dryContent li').length;
-    var copyContentItems = $('#' + id + '_dryCopyContent.dryCopyContent li');
-    var navigationContainer  = $('#' + id + '_drySlideNavigation');
-    var slideCount       = slideItems.length;
-    var navigation           = args.navigation ? args.navigation : false;
-    var speed            = args.speed ? args.speed : 'slow';
-    var startFrame       = args.startFrame ? args.startFrame : 0;
+    var contentItemsCount    = $('#' + id + '_dryContent.dryContent li').length;
+    var copyContentItems     = $('#' + id + '_dryCopyContent.dryCopyContent li');
+    var loop             = args.loop ? args.loop : false;
     var mainSlide        = args.mainSlide ? args.mainSlide : 0;
+    var navigation       = args.navigation ? args.navigation : false;
+    var navigationContainer  = $('#' + id + '_drySlideNavigation');
+    var slideContainer   = $('#' + id + '_drySlideContainer.drySlideContainer');
+    var slideItems       = $('#' + id + '_drySlides.drySlides li');
+    var slideCount       = slideItems.length;
     var beginningSlides  = slideCount - mainSlide;
     var firstChunk       = slideCount - beginningSlides;
     var PrimaryContentAnimation = args.PrimaryContentAnimation ? args.PrimaryContentAnimation : 'slide-left';
+    var lastChunk        = slideCount - ( mainSlide - 1 );
+    var speed            = args.speed ? args.speed : 'slow';
+    var startFrame       = args.startFrame ? args.startFrame : 0;
+    var timer            = args.timer ? args.timer : false;
+    var timerSpeed       = args.timerSpeed ? args.timerSpeed : 6000;
+    
     
     // Add the slide content to the content container
     var displayContent = function( slide ) {
@@ -138,11 +144,13 @@ var drySlide = function( args ) {
         
         var moveAmount = '';
         if( currentSlide >= slideCount - (mainSlide - 1) ) {
-           moveAmount = Math.abs((currentSlide - previousItem )) * slideWidth + 'px';
+        
+            // Find the value of which the slide needs to move in order to show the last items without getting out of frame
+            moveAmount = Math.abs((currentSlide - previousItem )) * slideWidth + 'px';
         }
         else
         if( currentSlide <= (firstChunk - 1) ) {
-            moveAmount = Math.abs((currentSlide - (firstChunk - 1) )) * slideWidth + 'px';
+            moveAmount = '0';
         }
         else {
             moveAmount = Math.abs((currentSlide - previousItem )) * slideWidth + 'px';
@@ -247,7 +255,35 @@ var drySlide = function( args ) {
     
     // Setup SEO friendly linkable pages
     // User the browser state API
-    
+
+    // Create a timer which can play through all of the slides
+    if( timer ) {
+        var i = 0;
+        var interval = setInterval(function(){
+            
+            // Every time this interval runs, increment to the next slide
+            // Once we get to the last slide, go back to the beginning if loop is set
+            displayContent( i );
+            selectSlideItem( i, 'button' );
+            navigationSelection( i );
+            
+            // Increment the count
+            i++;
+            
+            if( loop ) {
+                if( i === (contentItemsCount) ){
+                    i = 0;
+                }
+            }
+            else {
+                if( i === (contentItemsCount) ){
+                    i = 0;
+                    clearInterval(interval);
+                }
+            }
+            
+        },timerSpeed);
+    }
     
     // Create a function which updates the current item for the previous/next/slide/content/copy/navigation so that everyone is on the same page... literally
 };

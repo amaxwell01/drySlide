@@ -13,6 +13,20 @@ while also giving them more control on both the type of content that they add in
 
 # How To Use drySlide
 
+## Calling drySlide
+    drySlide({
+        id           : 'hockey', // This can be anything, but must start with a alphabetic character
+        loop         : true, //defaults to false
+        slideWidth   : '350px',
+        speed        : 400, // this is in milliseconds, defaults to 500ms
+        startFrame   : 0, // the start frame activated
+        navigation   : true,
+        mainSlide    : 4,
+        timer        : true, // defaults to false
+        timerSpeed   : 5000, // defaults to 6000ms
+        visibleCount : 7
+    });
+
 ## Main Content
     <div class="dryContentContainer" data-id="<insert id here>">
         <ul class="dryContent">
