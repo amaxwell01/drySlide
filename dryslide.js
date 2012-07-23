@@ -25,9 +25,11 @@ var drySlide = function( args ) {
     // Set variables
     var content              = $('#' + id + '_dryContent.dryContent');
     var contentParent        = content.parent();
-    var contentItems         = $('#' + id + '_dryContent.dryContent li');
-    var contentItemsCount    = $('#' + id + '_dryContent.dryContent li').length;
-    var copyContentItems     = $('#' + id + '_dryCopyContent.dryCopyContent li');
+    var contentItemsSelector = '#' + id + '_dryContent.dryContent li';
+    var contentItems         = $(contentItemsSelector);
+    var contentItemsCount    = $(contentItemsSelector).length;
+    var copyContentItemsSelector = '#' + id + '_dryCopyContent.dryCopyContent li';
+    var copyContentItems     = $(copyContentItemsSelector);
     var loop                 = args.loop ? args.loop : false;
     var mainSlide            = args.mainSlide ? args.mainSlide : 0;
     var navigation           = args.navigation ? args.navigation : false;
@@ -96,11 +98,11 @@ var drySlide = function( args ) {
         
         switch( selector ) {
             case copyContentItems:
-                speed = secondaryContentAnimation.speed;
+                //speed = secondaryContentAnimation.speed;
                 break;
             case contentItems:
             default:
-                speed = primaryContentAnimation.speed;
+                //speed = primaryContentAnimation.speed;
                 break;
         }
         
@@ -136,8 +138,8 @@ var drySlide = function( args ) {
     $( slideItems[ startFrame ] ).addClass('selected');
     
     // Show the content for the startFrame
-    drySlideAnimation.init( contentItems, startFrame );
-    drySlideAnimation.init( copyContentItems, startFrame );
+    drySlideAnimation.init( contentItemsSelector, startFrame );
+    drySlideAnimation.init( copyContentItemsSelector, startFrame );
     
     //Set the data-current on the content
     // TODO - Add the ability to get the frame count from the url and use that instead of the startFrame
@@ -150,8 +152,8 @@ var drySlide = function( args ) {
         {
             contentParent.attr('data-current', currentSlide);
             selectSlideItem( currentSlide - 1, 'button' );
-            drySlideAnimation.init( contentItems, currentSlide - 1 );
-            drySlideAnimation.init( copyContentItems, currentSlide - 1 );
+            drySlideAnimation.init( contentItemsSelector, currentSlide - 1 );
+            drySlideAnimation.init( copyContentItemsSelector, currentSlide - 1 );
             navigationSelection( currentSlide - 1 );
         }
     };
@@ -216,8 +218,8 @@ var drySlide = function( args ) {
         {
             contentParent.attr('data-current', currentSlide + 1 );
             selectSlideItem( currentSlide, 'button' );
-            drySlideAnimation.init( contentItems, currentSlide );
-            drySlideAnimation.init( copyContentItems, currentSlide );
+            drySlideAnimation.init( contentItemsSelector, currentSlide );
+            drySlideAnimation.init( copyContentItemsSelector, currentSlide );
             navigationSelection( currentSlide );
         }
     };
@@ -230,8 +232,8 @@ var drySlide = function( args ) {
         var slide = parseInt( that.attr('data-item') );
         
         selectSlideItem( slide, 'click' );
-        drySlideAnimation.init( contentItems, slide );
-        drySlideAnimation.init( copyContentItems, slide );
+        drySlideAnimation.init( contentItemsSelector, slide );
+        drySlideAnimation.init( copyContentItemsSelector, slide );
     });
     
     
@@ -274,8 +276,8 @@ var drySlide = function( args ) {
         
         contentParent.attr('data-current', currentSlide + 1 );
         selectSlideItem( itemNumber, 'button' );
-        drySlideAnimation.init( contentItems, itemNumber );
-        drySlideAnimation.init( copyContentItems, itemNumber );
+        drySlideAnimation.init( contentItemsSelector, itemNumber );
+        drySlideAnimation.init( copyContentItemsSelector, itemNumber );
     });
     
     
@@ -307,8 +309,8 @@ var drySlide = function( args ) {
             
             // Every time this interval runs, increment to the next slide
             // Once we get to the last slide, go back to the beginning if loop is set
-            drySlideAnimation.init( contentItems, i );
-            drySlideAnimation.init( copyContentItems, i );
+            drySlideAnimation.init( contentItemsSelector, i );
+            drySlideAnimation.init( copyContentItemsSelector, i );
             selectSlideItem( i, 'button' );
             navigationSelection( i );
             

@@ -35,6 +35,8 @@
 }
 .dryContent li {
     display: none;
+    margin: 0;
+    padding: 0;
 }
 .dryContent li.selected {
     display: block;
