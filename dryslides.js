@@ -23,49 +23,26 @@ var drySlide = function( args ) {
 
 
     // Set variables
-    var content          = $('#' + id + '_dryContent.dryContent');
-    var contentParent    = content.parent();
-    var contentItems     = $('#' + id + '_dryContent.dryContent li');
+    var content              = $('#' + id + '_dryContent.dryContent');
+    var contentParent        = content.parent();
+    var contentItems         = $('#' + id + '_dryContent.dryContent li');
     var contentItemsCount    = $('#' + id + '_dryContent.dryContent li').length;
     var copyContentItems     = $('#' + id + '_dryCopyContent.dryCopyContent li');
-    var loop             = args.loop ? args.loop : false;
-    var mainSlide        = args.mainSlide ? args.mainSlide : 0;
-    var navigation       = args.navigation ? args.navigation : false;
+    var loop                 = args.loop ? args.loop : false;
+    var mainSlide            = args.mainSlide ? args.mainSlide : 0;
+    var navigation           = args.navigation ? args.navigation : false;
     var navigationContainer  = $('#' + id + '_drySlideNavigation');
-    var slideContainer   = $('#' + id + '_drySlideContainer.drySlideContainer');
-    var slideItems       = $('#' + id + '_drySlides.drySlides li');
-    var slideCount       = slideItems.length;
-    var beginningSlides  = slideCount - mainSlide;
-    var firstChunk       = slideCount - beginningSlides;
-    var PrimaryContentAnimation = args.PrimaryContentAnimation ? args.PrimaryContentAnimation : 'slide-left';
-    var lastChunk        = slideCount - ( mainSlide - 1 );
-    var speed            = args.speed ? args.speed : 'slow';
-    var startFrame       = args.startFrame ? args.startFrame : 0;
-    var timer            = args.timer ? args.timer : false;
-    var timerSpeed       = args.timerSpeed ? args.timerSpeed : 6000;
-    
-    
-    // Add the slide content to the content container
-    var displayContent = function( slide ) {
-        
-        // Hide all content items
-        $( contentItems).removeClass('selected');
-        $( contentItems).fadeOut(500);
-        
-        // Show the content for the given slide
-        $( contentItems + '[data-item="' + slide + '"]').addClass('selected');
-        $( contentItems + '[data-item="' + slide + '"]').fadeIn(500);
-        
-        // Hide all copy content items
-        $( copyContentItems).removeClass('selected');
-        $( copyContentItems).fadeOut(500);
-        
-        // Show the copy content for the given slide
-        $( copyContentItems + '[data-item="' + slide + '"]').addClass('selected');
-        $( copyContentItems + '[data-item="' + slide + '"]').fadeIn(500);
-        
-        return true;
-    };
+    var slideContainer       = $('#' + id + '_drySlideContainer.drySlideContainer');
+    var slideItems           = $('#' + id + '_drySlides.drySlides li');
+    var slideCount           = slideItems.length;
+    var beginningSlides      = slideCount - mainSlide;
+    var firstChunk           = slideCount - beginningSlides;
+    var lastChunk            = slideCount - ( mainSlide - 1 );
+    var speed                = args.speed ? args.speed : 'slow';
+    var startFrame           = args.startFrame ? args.startFrame : 0;
+    var timer                = args.timer ? args.timer : false;
+    var timerSpeed           = args.timerSpeed ? args.timerSpeed : 6000;
+    var primaryContentAnimation = args.primaryContentAnimation ? args.primaryContentAnimation : { type : 'fade-out', speed: 500};
     
     
     // Set the data-middle attribute on the slides
@@ -97,12 +74,70 @@ var drySlide = function( args ) {
     });
     
     
+    /*
+     * Animation Controls
+     */
+     
+     var drySlideAnimation = {};
+    // Slide the content to the left
+    drySlideAnimation.slideLeft = function( id, area ) {
+        
+    };
+    
+    // Slide the content to the right
+    drySlideAnimation.slideRight = function( id, area ) {
+        
+    };
+    
+    // Fade content over the previous item
+    drySlideAnimation.fadeOut = function( selector, item, area ) {
+    
+        var speed;
+        
+        switch( selector ) {
+            case copyContentItems:
+                speed = secondaryContentAnimation.speed;
+                break;
+            case contentItems:
+            default:
+                speed = primaryContentAnimation.speed;
+                break;
+        }
+        
+        // Hide all content items
+        $(selector).removeClass('selected');
+        $(selector).fadeOut(500);
+        
+        // Show the content for the given slide
+        $(selector + '[data-item="' + item + '"]').addClass('selected');
+        $(selector + '[data-item="' + item + '"]').fadeIn(500);
+        return true;
+    };
+    
+    // Run the selected animation
+    drySlideAnimation.init = function( selector, item, area ) {
+        
+        switch( primaryContentAnimation.type ) {
+            case 'fade-out':
+                drySlideAnimation.fadeOut( selector, item, area );
+                break;
+            case 'slide-left':
+            default:
+                drySlideAnimation.slideLeft( selector, item, area );
+                break;
+            case 'slide-right':
+                drySlideAnimation.slideRight( selector, item, area );
+                break;
+        }
+    }
+    
     
     // Add the selected class to the start slide item
     $( slideItems[ startFrame ] ).addClass('selected');
     
     // Show the content for the startFrame
-    displayContent( startFrame );
+    drySlideAnimation.init( contentItems, startFrame );
+    drySlideAnimation.init( copyContentItems, startFrame );
     
     //Set the data-current on the content
     // TODO - Add the ability to get the frame count from the url and use that instead of the startFrame
@@ -115,7 +150,8 @@ var drySlide = function( args ) {
         {
             contentParent.attr('data-current', currentSlide);
             selectSlideItem( currentSlide - 1, 'button' );
-            displayContent( currentSlide - 1 );
+            drySlideAnimation.init( contentItems, currentSlide - 1 );
+            drySlideAnimation.init( copyContentItems, currentSlide - 1 );
             navigationSelection( currentSlide - 1 );
         }
     };
@@ -180,7 +216,8 @@ var drySlide = function( args ) {
         {
             contentParent.attr('data-current', currentSlide + 1 );
             selectSlideItem( currentSlide, 'button' );
-            displayContent( currentSlide );
+            drySlideAnimation.init( contentItems, currentSlide );
+            drySlideAnimation.init( copyContentItems, currentSlide );
             navigationSelection( currentSlide );
         }
     };
@@ -193,7 +230,8 @@ var drySlide = function( args ) {
         var slide = parseInt( that.attr('data-item') );
         
         selectSlideItem( slide, 'click' );
-        displayContent( slide );
+        drySlideAnimation.init( contentItems, slide );
+        drySlideAnimation.init( copyContentItems, slide );
     });
     
     
@@ -236,21 +274,27 @@ var drySlide = function( args ) {
         
         contentParent.attr('data-current', currentSlide + 1 );
         selectSlideItem( itemNumber, 'button' );
-        displayContent( itemNumber );
+        drySlideAnimation.init( contentItems, itemNumber );
+        drySlideAnimation.init( copyContentItems, itemNumber );
     });
     
     
     // Primary Content Animation
     // Change the way that the primary content animates
-    switch( PrimaryContentAnimation ) {
+    switch( primaryContentAnimation ) {
         case 'slide-right':
             // Slide the content to the left
+            console.log('slide-right');
             break;
         case 'slide-left':
         default:
             // Slide the content to the left
+            console.log('slide-left');
             break;
     }
+    
+    
+    
     
     
     // Setup SEO friendly linkable pages
@@ -263,7 +307,8 @@ var drySlide = function( args ) {
             
             // Every time this interval runs, increment to the next slide
             // Once we get to the last slide, go back to the beginning if loop is set
-            displayContent( i );
+            drySlideAnimation.init( contentItems, i );
+            drySlideAnimation.init( copyContentItems, i );
             selectSlideItem( i, 'button' );
             navigationSelection( i );
             

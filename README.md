@@ -15,6 +15,19 @@ while also giving them more control on both the type of content that they add in
 
 ## Calling drySlide
     drySlide({
+        primaryContentAnimation : {
+            type  : 'slide-left',  // Defaults to slide-left
+            speed : 500
+        },
+        secondaryContentAnimation : {
+            type  : 'fade-out',  // Defaults to fade-out
+            speed : 500
+        },
+        sliderAnimation : {
+            type  : 'slide-left', // Defaults to slide-left
+            speed : 500,
+            visibleCount : 7
+        }
         id           : 'hockey', // This can be anything, but must start with a alphabetic character
         loop         : true, //defaults to false
         slideWidth   : '350px',
@@ -23,8 +36,7 @@ while also giving them more control on both the type of content that they add in
         navigation   : true,
         mainSlide    : 4,
         timer        : true, // defaults to false
-        timerSpeed   : 5000, // defaults to 6000ms
-        visibleCount : 7
+        timerSpeed   : 5000 // defaults to 6000ms
     });
 
 ## Main Content
