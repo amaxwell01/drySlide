@@ -7,7 +7,8 @@ A: I decided after working with galleries for almost 8 years that it was time to
 I also figured that other developers can use a gallery/slideshow that actually gave them the functionaility that they need, when they need it, 
 while also giving them more control on both the type of content that they add into the gallery/slideshow as well as the semantic HTML code that is being used.
 
-
+## Minimum Requirements: (I have not tested this on older versions, if you have time to test it on older versions that would be greatly appreciated)
+    jQuery 1.7.2
 
 
 
@@ -16,21 +17,23 @@ while also giving them more control on both the type of content that they add in
 ## Calling drySlide
     drySlide({
         primaryContentAnimation : {
+            slideWidth   : '350px',
+            speed : 500,
             type  : 'slide-left',  // Defaults to slide-left
-            speed : 500
         },
         secondaryContentAnimation : {
-            type  : 'fade-out',  // Defaults to fade-out
-            speed : 500
+            slideWidth   : '350px',
+            speed : 500,
+            type  : 'fade-out'  // Defaults to fade-out
         },
         sliderAnimation : {
-            type  : 'slide-left', // Defaults to slide-left
+            slideWidth   : '350px',
             speed : 500,
+            type  : 'slide-left', // Defaults to slide-left
             visibleCount : 7
         }
         id           : 'hockey', // This can be anything, but must start with a alphabetic character
         loop         : true, //defaults to false
-        slideWidth   : '350px',
         speed        : 400, // this is in milliseconds, defaults to 500ms
         startFrame   : 0, // the start frame activated
         navigation   : true,
