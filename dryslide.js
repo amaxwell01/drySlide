@@ -3,7 +3,7 @@
 * Intructions: https://github.com/amaxwell01/drySlide
 * By: Andrew Maxwell, http://www.andrewcmaxwell.com
 * Version: 0.1
-* Updated: July 17th, 2011
+* Updated: July 24th, 2012
 */
 
 var drySlide = function( args ) {
@@ -77,17 +77,43 @@ var drySlide = function( args ) {
     
     
     /*
-     * Animation Controls
+     * ANIMATION CONTROLS
      */
      
-     var drySlideAnimation = {};
+    var drySlideAnimation = {};
+    
     // Slide the content to the left
-    drySlideAnimation.slideLeft = function( id, area ) {
+    drySlideAnimation.slideLeft = function( selector, item, area ) {
+        // Get the parent of the selector
+        var parentID = $(selector).parent().attr('id');
         
+        // Get the originating slide (aka the previous slide)
+        var previousItem = 0;
+        // Get the current item
+        if( $(selector + '[data-item="' + item + '"]').hasClass('selected') ) {
+            previousItem = $(selector + '[data-item="' + item + '"]').hasClass('selected');
+        }
+        
+        var previousItemPosition = $(selector + '[data-item="' + previousItem + '"]').position();
+        var previousItemDistance = previousItemPosition.left;
+
+        
+        // Show the next item
+        $(selector).removeClass('selected');
+        $(selector + '[data-item="' + item + '"]').addClass('selected');
+        
+        // Get the selected slide
+        var selectedItem = item;
+        var selectedItemPosition = $(selector + '[data-item="' + item + '"]').position();
+        var selectedItemDistance = selectedItemPosition.left;
+        
+        // Find the distance between the two, then animate that distance
+        var moveAmount = selectedItemDistance - previousItemDistance + 'px';
+        $('#' + parentID).animate({ 'left': '-=' + moveAmount}, speed );
     };
     
     // Slide the content to the right
-    drySlideAnimation.slideRight = function( id, area ) {
+    drySlideAnimation.slideRight = function( selector, item, area ) {
         
     };
     
@@ -119,16 +145,24 @@ var drySlide = function( args ) {
     // Run the selected animation
     drySlideAnimation.init = function( selector, item, area ) {
         
+        var selectorParent = $(selector).parent().length;
+        
         switch( primaryContentAnimation.type ) {
             case 'fade-out':
-                drySlideAnimation.fadeOut( selector, item, area );
+                if( selectorParent > 0 ) {
+                    drySlideAnimation.fadeOut( selector, item, area );
+                }
                 break;
             case 'slide-left':
             default:
-                drySlideAnimation.slideLeft( selector, item, area );
+                if( selectorParent > 0 ) {
+                    drySlideAnimation.slideLeft( selector, item, area );
+                }
                 break;
             case 'slide-right':
-                drySlideAnimation.slideRight( selector, item, area );
+                if( selectorParent > 0 ) {
+                    drySlideAnimation.slideRight( selector, item, area );
+                }
                 break;
         }
     }
@@ -137,13 +171,15 @@ var drySlide = function( args ) {
     // Add the selected class to the start slide item
     $( slideItems[ startFrame ] ).addClass('selected');
     
+    //Set the data-current on the content
+    // TODO - Add the ability to get the frame count from the url and use that instead of the startFrame
+    contentParent.attr('data-current', startFrame);
+    
     // Show the content for the startFrame
     drySlideAnimation.init( contentItemsSelector, startFrame );
     drySlideAnimation.init( copyContentItemsSelector, startFrame );
     
-    //Set the data-current on the content
-    // TODO - Add the ability to get the frame count from the url and use that instead of the startFrame
-    contentParent.attr('data-current', startFrame);
+    
     
     var previousSlide = function() {
         var currentSlide   = parseInt(contentParent.attr('data-current'));
@@ -275,7 +311,7 @@ var drySlide = function( args ) {
         navigationSelection( itemNumber );
         
         contentParent.attr('data-current', currentSlide + 1 );
-        selectSlideItem( itemNumber, 'button' );
+        //selectSlideItem( itemNumber, 'button' );
         drySlideAnimation.init( contentItemsSelector, itemNumber );
         drySlideAnimation.init( copyContentItemsSelector, itemNumber );
     });
@@ -302,6 +338,11 @@ var drySlide = function( args ) {
     // Setup SEO friendly linkable pages
     // User the browser state API
 
+    
+    
+    /*
+     * TIMER
+     */
     // Create a timer which can play through all of the slides
     if( timer ) {
         var i = 0;

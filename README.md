@@ -1,3 +1,10 @@
+* drySlide, A Gallery Plugin for jQuery
+* Intructions: https://github.com/amaxwell01/drySlide
+* By: Andrew Maxwell, http://www.andrewcmaxwell.com
+* Version: 0.1
+* Updated: July 24th, 2012
+
+
 Q: What does drySlide stand for?:  
 A: drySlide actually stands for "Don't Repeat Yourself, Slide!". One of my mottos is to not repeat yourself and I feel like other developers feel like they
 are always repeating themself when working with code, and in this case galleries and slideshows.
@@ -34,7 +41,7 @@ while also giving them more control on both the type of content that they add in
         }
         id           : 'hockey', // This can be anything, but must start with a alphabetic character
         loop         : true, //defaults to false
-        speed        : 400, // this is in milliseconds, defaults to 500ms
+        speed        : 400, // this is in milliseconds, defaults to 500ms, this is used for ALL sections that have a speed
         startFrame   : 0, // the start frame activated
         navigation   : true,
         mainSlide    : 4,
