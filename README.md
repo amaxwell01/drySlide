@@ -1,8 +1,8 @@
-* drySlide, A Gallery Plugin for jQuery
-* Intructions: https://github.com/amaxwell01/drySlide
-* By: Andrew Maxwell, http://www.andrewcmaxwell.com
-* Version: 0.1
-* Updated: July 24th, 2012
+drySlide, A Gallery Plugin for jQuery
+Intructions: https://github.com/amaxwell01/drySlide
+By: Andrew Maxwell, http://www.andrewcmaxwell.com
+Version: 0.1
+Updated: July 24th, 2012
 
 
 Q: What does drySlide stand for?:  
@@ -14,7 +14,8 @@ A: I decided after working with galleries for almost 8 years that it was time to
 I also figured that other developers can use a gallery/slideshow that actually gave them the functionaility that they need, when they need it, 
 while also giving them more control on both the type of content that they add into the gallery/slideshow as well as the semantic HTML code that is being used.
 
-## Minimum Requirements: (I have not tested this on older versions, if you have time to test it on older versions that would be greatly appreciated)
+## Minimum Requirements:
+(I have not tested this on older versions, if you have time to test it on older versions that would be greatly appreciated)
     jQuery 1.7.2
 
 
