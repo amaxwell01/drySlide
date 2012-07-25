@@ -25,17 +25,20 @@ while also giving them more control on both the type of content that they add in
     drySlide({
         primaryContentAnimation : {
             slideWidth   : '350px',
-            speed : 500,
+            speed : [duration], // A string or number determining how long the animation will run
+            transition: 'linear',
             type  : 'slide-left',  // Defaults to slide-left
         },
         secondaryContentAnimation : {
             slideWidth   : '350px',
             speed : 500,
+            transition: 'linear',
             type  : 'fade-out'  // Defaults to fade-out
         },
         sliderAnimation : {
             slideWidth   : '350px',
             speed : 500,
+            transition: 'linear',
             type  : 'slide-left', // Defaults to slide-left
             visibleCount : 7
         }
@@ -84,9 +87,16 @@ while also giving them more control on both the type of content that they add in
 
 
 
+Variable options
+### drySlide.primaryContentAnimation.type
+* 'slide-left'
+* 'slide-right'
+* 'fade-out'
 
-
-
+### drySlide.primaryContentAnimation.speed
+* 0 - 9999999999999 (This is in milliseconds. You can have it run longer than 9999999999999 if you really wanted, but why would you? This is 316.88 years)
+* 'slow' (600 milliseconds)
+* 'fast' (200 milliseconds)
 
 
 ## Notes

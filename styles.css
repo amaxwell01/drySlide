@@ -3,12 +3,12 @@
 .dryPreviousSlide,
 .dryNextSlide
 {
-    float: left;
-    background: rgba(0, 0, 0, 0.08);
-    border: solid 2px #CCC;
-    height: 36px;
-    margin: 30px 10px 0;
-    width: 106px;
+    float: left;  /* User Set Value */
+    background: rgba(0, 0, 0, 0.08);  /* User Set Value */
+    border: solid 2px #CCC;  /* User Set Value */
+    height: 36px;  /* User Set Value */
+    margin: 30px 10px 0;  /* User Set Value */
+    width: 106px;  /* User Set Value */
 }
 .dryPreviousSlide {
     clear: both;
@@ -16,41 +16,46 @@
 .dryPreviousSlide:hover,
 .dryNextSlide:hover
 {
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.15);  /* User Set Value */
 }
+
 
 
 /*=== CONTENT CONTAINER ===*/
 .dryContentContainer {
-    border: solid 1px #bada55;
-    float: left;
-    height: 400px;
-    width: 600px;
+    border: solid 1px #bada55;  /* User Set Value */
+    float: left;  /* User Set Value */
+    height: 200px;  /* User Set Value */
+    overflow: hidden;
+    position: relative;
+    width: 350px;  /* User Set Value */
 }
 .dryContent {
-    height: 400px;
+    height: 400px;  /* User Set Value */
     margin: 0;
     padding: 0;
-    position: relative;
+    position: absolute;
+    width: 999999px;
 }
 .dryContent li {
     display: block;
+    float: left;
+    height: 200px; /* User Set Value */
     margin: 0;
     padding: 0;
+    position: relative;
+    width: 350px; /* User set value */
 }
 .dryContent li.selected {
-    display: block;
-    float: left;
-    position: relative;
 }
 
 
 /*=== COPY CONTENT CONTAINER ===*/
 .dryCopyContentContainer {
-    border: solid 1px #bada55;
+    border: solid 1px #bada55;  /* User Set Value */
     float: left;
-    height: 120px;
-    width: 600px;
+    height: 120px;  /* User Set Value */
+    width: 600px;  /* User Set Value */
 }
 .dryCopyContent {
     position: relative;
@@ -69,15 +74,15 @@
 
 
 .drySlideContainer {
-    border: solid 2px #CCC;
+    border: solid 2px #CCC;  /* User Set Value */
     float: left;
-    height: 102px;
+    height: 102px;  /* User Set Value */
     overflow: hidden;
     position: relative;
-    width: 714px;
+    width: 714px;  /* User Set Value */
 }
 .drySlides {
-    height: 120px;
+    height: 120px;  /* User Set Value */
     left: 0;
     margin: 0;
     padding: 0;
@@ -85,12 +90,12 @@
     top: 0;
 }
 .drySlides li {
-    border: solid 1px transparent;
+    border: solid 1px transparent;  /* User Set Value */
     display: inline-block;
     float: left;
-    height: 100px;
-    opacity: .5;
-    width: 100px;
+    height: 100px;  /* User Set Value */
+    opacity: .5;  /* User Set Value */
+    width: 100px;  /* User Set Value */
 }
 .drySlides li.selected {
     border: solid 1px transparent;
@@ -103,21 +108,21 @@
 
 /*=== NAVIGATION ===*/
 .drySlideNavigation {
-    float: left;
+    float: left;  /* User Set Value */
     margin: 0;
     padding: 0;
 }
 .drySlideNavigation li {
-    background: #CCC;
-    webkit-border-radius: 5px;
-    border-radius: 5px;
-    cursor: pointer;
+    background: #CCC;  /* User Set Value */
+    webkit-border-radius: 5px;  /* User Set Value */
+    border-radius: 5px;  /* User Set Value */
+    cursor: pointer;  /* User Set Value */
     display: inline-block;
-    height: 10px;
-    margin: 0 5px 0 0;
+    height: 10px;  /* User Set Value */
+    margin: 0 5px 0 0;  /* User Set Value */
     padding: 0;
-    width: 10px;
+    width: 10px;  /* User Set Value */
 }
 .drySlideNavigation li.selected {
-    background: #666;
+    background: #666;  /* User Set Value */
 }
