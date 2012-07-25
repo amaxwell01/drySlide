@@ -15,7 +15,7 @@ I also figured that other developers can use a gallery/slideshow that actually g
 while also giving them more control on both the type of content that they add into the gallery/slideshow as well as the semantic HTML code that is being used.
 
 ## Minimum Requirements:
-(I have not tested this on older versions, if you have time to test it on older versions that would be greatly appreciated)
+(I have not tested this on older versions, if you have time to test it on older versions that would be greatly appreciated)  
     jQuery 1.7.2
 
 
