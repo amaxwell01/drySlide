@@ -1,3 +1,10 @@
+drySlide, A Gallery Plugin for jQuery
+Intructions: https://github.com/amaxwell01/drySlide
+By: Andrew Maxwell, http://www.andrewcmaxwell.com
+Version: 0.1
+Updated: August 6th, 2012
+
+
 Q: What does drySlide stand for?:  
 A: drySlide actually stands for "Don't Repeat Yourself, Slide!". One of my mottos is to not repeat yourself and I feel like other developers feel like they
 are always repeating themself when working with code, and in this case galleries and slideshows.
@@ -7,7 +14,8 @@ A: I decided after working with galleries for almost 8 years that it was time to
 I also figured that other developers can use a gallery/slideshow that actually gave them the functionaility that they need, when they need it, 
 while also giving them more control on both the type of content that they add into the gallery/slideshow as well as the semantic HTML code that is being used.
 
-## Minimum Requirements: (I have not tested this on older versions, if you have time to test it on older versions that would be greatly appreciated)
+## Minimum Requirements:
+(I have not tested this on older versions, if you have time to test it on older versions that would be greatly appreciated)  
     jQuery 1.7.2
 
 
@@ -27,17 +35,20 @@ while also giving them more control on both the type of content that they add in
     drySlide({
         primaryContentAnimation : {
             slideWidth   : '350px',
-            speed : 500,
+            speed : [duration], // A string or number determining how long the animation will run
+            transition: 'linear',
             type  : 'slide-left',  // Defaults to slide-left
         },
         secondaryContentAnimation : {
             slideWidth   : '350px',
             speed : 500,
+            transition: 'linear',
             type  : 'fade-out'  // Defaults to fade-out
         },
         sliderAnimation : {
             slideWidth   : '350px',
             speed : 500,
+            transition: 'linear',
             type  : 'slide-left', // Defaults to slide-left
             visibleCount : 7
         }
@@ -47,7 +58,7 @@ while also giving them more control on both the type of content that they add in
             customURL : true // Defaults to false
         },
         loop         : true, //defaults to false
-        speed        : 400, // this is in milliseconds, defaults to 500ms
+        speed        : 400, // this is in milliseconds, defaults to 500ms, this is used for ALL sections that have a speed
         startFrame   : 0, // the start frame activated or you can use the start check from above
         startFrame   : drySlideStart,
         navigation   : true,
@@ -92,9 +103,16 @@ while also giving them more control on both the type of content that they add in
 
 
 
+Variable options
+### drySlide.primaryContentAnimation.type
+* 'slide-left'
+* 'slide-right'
+* 'fade-out'
 
-
-
+### drySlide.primaryContentAnimation.speed
+* 0 - 9999999999999 (This is in milliseconds. You can have it run longer than 9999999999999 if you really wanted, but why would you? This is 316.88 years)
+* 'slow' (600 milliseconds)
+* 'fast' (200 milliseconds)
 
 
 ## Notes
