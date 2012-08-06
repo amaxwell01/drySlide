@@ -14,6 +14,15 @@ while also giving them more control on both the type of content that they add in
 
 # How To Use drySlide
 
+## Capturing the static URL's for linking
+    // Set starting slide to 0
+    var drySlideStart = 0;
+    // Get slide number if it exists
+    if (window.location.hash) {
+        drySlideStart = window.location.hash.replace('#','');
+    }
+
+
 ## Calling drySlide
     drySlide({
         primaryContentAnimation : {
@@ -33,15 +42,21 @@ while also giving them more control on both the type of content that they add in
             visibleCount : 7
         }
         id           : 'hockey', // This can be anything, but must start with a alphabetic character
+        linking      : {
+            enabled  : true, // Defaults to false
+            customURL : true // Defaults to false
+        },
         loop         : true, //defaults to false
         speed        : 400, // this is in milliseconds, defaults to 500ms
-        startFrame   : 0, // the start frame activated
+        startFrame   : 0, // the start frame activated or you can use the start check from above
+        startFrame   : drySlideStart,
         navigation   : true,
         mainSlide    : 4,
         timer        : true, // defaults to false
         timerSpeed   : 5000 // defaults to 6000ms
     });
 
+    
 ## Main Content
     <div class="dryContentContainer" data-id="<insert id here>">
         <ul class="dryContent">

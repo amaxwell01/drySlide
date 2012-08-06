@@ -3,7 +3,7 @@
 * Intructions: https://github.com/amaxwell01/drySlide
 * By: Andrew Maxwell, http://www.andrewcmaxwell.com
 * Version: 0.1
-* Updated: July 17th, 2011
+* Updated: Auguest 5th, 2012
 */
 
 var drySlide = function( args ) {
@@ -30,6 +30,10 @@ var drySlide = function( args ) {
     var contentItemsCount    = $(contentItemsSelector).length;
     var copyContentItemsSelector = '#' + id + '_dryCopyContent.dryCopyContent li';
     var copyContentItems     = $(copyContentItemsSelector);
+    var linking              = args.linking ? args.linking ? {
+            enabled  : true, // Defaults to false
+            customURL : false // Defaults to false
+        };
     var loop                 = args.loop ? args.loop : false;
     var mainSlide            = args.mainSlide ? args.mainSlide : 0;
     var navigation           = args.navigation ? args.navigation : false;
@@ -44,7 +48,8 @@ var drySlide = function( args ) {
     var startFrame           = args.startFrame ? args.startFrame : 0;
     var timer                = args.timer ? args.timer : false;
     var timerSpeed           = args.timerSpeed ? args.timerSpeed : 6000;
-    var primaryContentAnimation = args.primaryContentAnimation ? args.primaryContentAnimation : { type : 'fade-out', speed: 500};
+    var primaryContentAnimation   = args.primaryContentAnimation ? args.primaryContentAnimation : { type : 'fade-out', speed: 500};
+    var secondaryContentAnimation = args.secondaryContentAnimation ? args.secondaryContentAnimation : { type : 'fade-out', speed: 500};
     
     
     // Set the data-middle attribute on the slides
@@ -96,6 +101,8 @@ var drySlide = function( args ) {
     
         var speed;
         
+        window.location.hash = item;
+        
         switch( selector ) {
             case copyContentItems:
                 //speed = secondaryContentAnimation.speed;
@@ -119,7 +126,23 @@ var drySlide = function( args ) {
     // Run the selected animation
     drySlideAnimation.init = function( selector, item, area ) {
         
+        
+        // Primary animation switch
         switch( primaryContentAnimation.type ) {
+            case 'fade-out':
+                drySlideAnimation.fadeOut( selector, item, area );
+                break;
+            case 'slide-left':
+            default:
+                drySlideAnimation.slideLeft( selector, item, area );
+                break;
+            case 'slide-right':
+                drySlideAnimation.slideRight( selector, item, area );
+                break;
+        }
+        
+        // secondary animation switch
+        switch( secondaryContentAnimation.type ) {
             case 'fade-out':
                 drySlideAnimation.fadeOut( selector, item, area );
                 break;
@@ -332,5 +355,6 @@ var drySlide = function( args ) {
         },timerSpeed);
     }
     
-    // Create a function which updates the current item for the previous/next/slide/content/copy/navigation so that everyone is on the same page... literally
+    
+    // Setup for static URL's for each slide
 };
