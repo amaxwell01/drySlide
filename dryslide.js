@@ -203,18 +203,20 @@ var drySlide = function( args ) {
                 break;
         }
         
-        // secondary animation switch
-        switch( secondaryContentAnimation.type ) {
-            case 'fade-out':
-                drySlideAnimation.fadeOut( selector, item, area );
-                break;
-            case 'slide-left':
-            default:
-                drySlideAnimation.slideLeft( selector, item, area );
-                break;
-            case 'slide-right':
-                drySlideAnimation.slideRight( selector, item, area );
-                break;
+        if( area === 'secondarycontent' ) {
+            // secondary animation switch
+            switch( secondaryContentAnimation.type ) {
+                case 'fade-out':
+                    drySlideAnimation.fadeOut( selector, item, area );
+                    break;
+                case 'slide-left':
+                default:
+                    drySlideAnimation.slideLeft( selector, item, area );
+                    break;
+                case 'slide-right':
+                    drySlideAnimation.slideRight( selector, item, area );
+                    break;
+            }
         }
     }
     
@@ -261,11 +263,15 @@ var drySlide = function( args ) {
         
         contentParent.attr('data-current', currentSlide );
         
+        // If the user has enabled navigation
+        if( navigation ) {
+            navigationSelection( currentSlide );
+        }
+        
         // Add a window.location.hash if the user has opted into linking
         if( args.linking.enabled ) {
             window.location.hash = ( parseInt(currentSlide) + 1 );
         }
-        
         
         // If a user jumps around in the selection, it needs to animate accordingly to fill that gap
         // vs just animating one slide
@@ -374,10 +380,6 @@ var drySlide = function( args ) {
         drySlideAnimation.init( contentItemsSelector, itemNumber, 'primarycontent' );
         drySlideAnimation.init( copyContentItemsSelector, itemNumber, 'secondarycontent' );
     });
-    
-    
-    // Setup SEO friendly linkable pages
-    // User the browser state API
 
     
     
@@ -413,4 +415,24 @@ var drySlide = function( args ) {
         },timerSpeed);
     }
     
+    // Setup SEO friendly linkable pages
+    // User the browser state API
+    // Enabling Custom Linking
+    if( args.linking.enabled ) {
+        
+        $('a').attr('data-name', id ).on('click', function() {
+            // get clicked, pass to animate function					
+            var clicked = $(this).attr('href').match('[^#/]+$') - 1;
+            var current = contentParent.attr('data-current');
+            
+            // if current slide equals clicked, don't do anything
+            if( current != clicked ) {
+                navigationSelection( clicked );
+                contentParent.attr('data-current', clicked );
+                selectSlideItem( clicked, 'button' );
+                drySlideAnimation.init( contentItemsSelector, clicked, 'primarycontent' );
+                drySlideAnimation.init( copyContentItemsSelector, clicked, 'secondarycontent' );
+            }
+        });
+    }
 };
