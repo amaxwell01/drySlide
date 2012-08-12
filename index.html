@@ -4,15 +4,33 @@
     <link type="text/css" rel="stylesheet" href="styles.css" />
     
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script type="text/javascript" src="dryslides.js"></script>
+    <script type="text/javascript" src="dryslide.js"></script>
     <script>
         $(document).ready(function(){
+        
+            // Set starting slide to 0
+            var drySlideStart = 0;
+            // Get slide number if it exists
+            if (window.location.hash) {
+                var start = window.location.hash.replace('#','');
+                drySlideStart = ( parseInt(start) - 1 );
+            }
+        
+
             drySlide({
                 id           : 'drySlide',
+                linking      : {
+                    enabled  : true
+                },
                 mainSlide    : 4,
                 navigation   : true,
+                primaryContentAnimation : {
+                    slideWidth   : '350px',
+                    speed : 400,
+                    type  : 'slide-left',  // Defaults to fade-out
+                },
                 speed        : 200, // this is in milliseconds
-                startFrame   : 0, // the start frame activated
+                startFrame   : drySlideStart, // the start frame activated
                 visibleCount : 7
             });
         });
@@ -23,18 +41,18 @@
 
 <div class="dryContentContainer" data-id="drySlide">
     <ul class="dryContent">
-        <li><img src="http://placehold.it/600x400&text=slide+1" /></li>
-        <li><img src="http://placehold.it/600x400&text=slide+2" /></li>
-        <li><img src="http://placehold.it/600x400&text=slide+3" /></li>
-        <li><img src="http://placehold.it/600x400&text=slide+4" /></li>
-        <li><img src="http://placehold.it/600x400&text=slide+5" /></li>
-        <li><img src="http://placehold.it/600x400&text=slide+6" /></li>
-        <li><img src="http://placehold.it/600x400&text=slide+7" /></li>
-        <li><img src="http://placehold.it/600x400&text=slide+8" /></li>
-        <li><img src="http://placehold.it/600x400&text=slide+9" /></li>
-        <li><img src="http://placehold.it/600x400&text=slide+10" /></li>
-        <li><img src="http://placehold.it/600x400&text=slide+11" /></li>
-        <li><img src="http://placehold.it/600x400&text=slide+12" /></li>
+        <li><img src="images/1.jpg" width="350" height="200" /></li>
+        <li><img src="images/2.jpg" width="350" height="200" /></li>
+        <li><img src="images/3.jpg" width="350" height="200" /></li>
+        <li><img src="images/4.jpg" width="350" height="200" /></li>
+        <li><img src="images/5.jpg" width="350" height="200" /></li>
+        <li><img src="images/6.jpg" width="350" height="200" /></li>
+        <li><img src="images/7.jpg" width="350" height="200" /></li>
+        <li><img src="images/8.jpg" width="350" height="200" /></li>
+        <li><img src="images/9.jpg" width="350" height="200" /></li>
+        <li><img src="images/10.jpg" width="350" height="200" /></li>
+        <li><img src="images/11.jpg" width="350" height="200" /></li>
+        <li><img src="images/12.jpg" width="350" height="200" /></li>
     </ul>
 </div>
 

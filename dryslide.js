@@ -31,7 +31,7 @@ var drySlide = function( args ) {
     var contentItemsCount    = $(contentItemsSelector).length;
     var copyContentItemsSelector = '#' + id + '_dryCopyContent.dryCopyContent li';
     var copyContentItems     = $(copyContentItemsSelector);
-    var linking              = args.linking ? args.linking ? {
+    var linking              = args.linking ? args.linking : {
             enabled  : true, // Defaults to false
             customURL : false // Defaults to false
         };
@@ -261,6 +261,12 @@ var drySlide = function( args ) {
         
         contentParent.attr('data-current', currentSlide );
         
+        // Add a window.location.hash if the user has opted into linking
+        if( args.linking.enabled ) {
+            window.location.hash = ( parseInt(currentSlide) + 1 );
+        }
+        
+        
         // If a user jumps around in the selection, it needs to animate accordingly to fill that gap
         // vs just animating one slide
         // If the slide item is greater than the (slideCount - (mainSlide - 1)), only animate to (slideCount - (mainSlide - 1))
@@ -407,12 +413,4 @@ var drySlide = function( args ) {
         },timerSpeed);
     }
     
-    
-    // Setup for static URL's for each slide
-    window.location.hash = item;
-        
-    switch( selector ) {
-        default:
-            break;
-    }
 };
