@@ -1,8 +1,8 @@
-* drySlide, A Gallery Plugin for jQuery
-* Intructions: https://github.com/amaxwell01/drySlide
-* By: Andrew Maxwell, http://www.andrewcmaxwell.com
-* Version: 0.1
-* Updated: July 24th, 2012
+drySlide, A Gallery Plugin for jQuery
+Intructions: https://github.com/amaxwell01/drySlide
+By: Andrew Maxwell, http://www.andrewcmaxwell.com
+Version: 0.1
+Updated: August 6th, 2012
 
 
 Q: What does drySlide stand for?:  
@@ -14,12 +14,22 @@ A: I decided after working with galleries for almost 8 years that it was time to
 I also figured that other developers can use a gallery/slideshow that actually gave them the functionaility that they need, when they need it, 
 while also giving them more control on both the type of content that they add into the gallery/slideshow as well as the semantic HTML code that is being used.
 
-## Minimum Requirements: (I have not tested this on older versions, if you have time to test it on older versions that would be greatly appreciated)
+## Minimum Requirements:
+(I have not tested this on older versions, if you have time to test it on older versions that would be greatly appreciated)  
     jQuery 1.7.2
 
 
 
 # How To Use drySlide
+
+## Capturing the static URL's for linking
+    // Set starting slide to 0
+    var drySlideStart = 0;
+    // Get slide number if it exists
+    if (window.location.hash) {
+        drySlideStart = window.location.hash.replace('#','');
+    }
+
 
 ## Calling drySlide
     drySlide({
@@ -43,15 +53,21 @@ while also giving them more control on both the type of content that they add in
             visibleCount : 7
         }
         id           : 'hockey', // This can be anything, but must start with a alphabetic character
+        linking      : {
+            enabled  : true, // Defaults to false
+            customURL : true // Defaults to false
+        },
         loop         : true, //defaults to false
         speed        : 400, // this is in milliseconds, defaults to 500ms, this is used for ALL sections that have a speed
-        startFrame   : 0, // the start frame activated
+        startFrame   : 0, // the start frame activated or you can use the start check from above
+        startFrame   : drySlideStart,
         navigation   : true,
         mainSlide    : 4,
         timer        : true, // defaults to false
         timerSpeed   : 5000 // defaults to 6000ms
     });
 
+    
 ## Main Content
     <div class="dryContentContainer" data-id="<insert id here>">
         <ul class="dryContent">
