@@ -36,7 +36,8 @@ var drySlide = function( args ) {
     var navigation           = args.navigation ? args.navigation : false;
     var navigationContainer  = $('#' + id + '_drySlideNavigation');
     var slideContainer       = $('#' + id + '_drySlideContainer.drySlideContainer');
-    var slideItems           = $('#' + id + '_drySlides.drySlides li');
+    var slideItemsSelector   = '#' + id + '_drySlides.drySlides li';
+    var slideItems           = $(slideItemsSelector);
     var slideCount           = slideItems.length;
     var beginningSlides      = slideCount - mainSlide;
     var firstChunk           = slideCount - beginningSlides;
@@ -45,7 +46,9 @@ var drySlide = function( args ) {
     var startFrame           = args.startFrame ? args.startFrame : 0;
     var timer                = args.timer ? args.timer : false;
     var timerSpeed           = args.timerSpeed ? args.timerSpeed : 6000;
-    var primaryContentAnimation = args.primaryContentAnimation ? args.primaryContentAnimation : { type : 'fade-out', speed: 500};
+    var primaryContent       = args.primaryContent ? args.primaryContent : { type : 'fade-out', speed: 500};
+    var secondaryContent       = args.secondaryContent ? args.secondaryContent : { type : 'fade-out', speed: 500};
+    var slideContent       = args.slideContent ? args.slideContent : { type : 'none', speed: 500};
     
     
     // Set the data-middle attribute on the slides
@@ -147,11 +150,11 @@ var drySlide = function( args ) {
         
         switch( area ) {
             case copyContentItems:
-                //speed = secondaryContentAnimation.speed;
+                //speed = secondaryContent.speed;
                 break;
             case contentItems:
             default:
-                //speed = primaryContentAnimation.speed;
+                //speed = primaryContent.speed;
                 break;
         }
         
@@ -176,9 +179,22 @@ var drySlide = function( args ) {
     drySlideAnimation.init = function( selector, item, area ) {
         
         var selectorParent = $(selector).parent().length;
+        var type;
         
+        switch( area ) {
+            case 'primarycontent':
+            default:
+                type = primaryContent.type;
+                break;
+            case 'secondarycontent':
+                type = secondaryContent.type;
+                break;
+            case 'slidecontent':
+                type = slideContent.type;
+                break;
+        }
         
-        switch( primaryContentAnimation.type ) {
+        switch( type ) {
             case 'fade-out':
                 if( selectorParent > 0 ) {
                     drySlideAnimation.fadeOut( selector, item, area );
@@ -233,6 +249,8 @@ var drySlide = function( args ) {
         var previousItem = parseInt( $(content).children('li.selected').attr('data-item') );
         var slideWidth = $(slideContainer).children('.drySlides').children('li[data-item="0"]').outerWidth();
         
+        drySlideAnimation.init( slideItemsSelector, currentSlide, 'slidecontent' );
+        
         // Remove the select class from all items
         $(slideItems).removeClass('selected');
 
@@ -247,7 +265,8 @@ var drySlide = function( args ) {
         // If the slide item is less than the (currentSlide >= (firstChunk - 1)), only animate to (firstChunk - 1)
         
         
-        var moveAmount = '';
+        
+        /* var moveAmount = '';
         if( currentSlide >= slideCount - (mainSlide - 1) ) {
         
             // Find the value of which the slide needs to move in order to show the last items without getting out of frame
@@ -275,7 +294,7 @@ var drySlide = function( args ) {
                 slideContainer.attr('data-middle', middleSlide - 1 );
                 $('#' + id + '_drySlides.drySlides').animate({ 'left': '+=' + moveAmount}, speed );
             }
-        }
+        } */
     };
     
     var nextSlide = function() {
@@ -344,7 +363,7 @@ var drySlide = function( args ) {
         
         navigationSelection( itemNumber );
         contentParent.attr('data-current', itemNumber );
-        //selectSlideItem( itemNumber, 'button' );
+        selectSlideItem( itemNumber, 'button' );
         drySlideAnimation.init( contentItemsSelector, itemNumber, 'primarycontent' );
         drySlideAnimation.init( copyContentItemsSelector, itemNumber, 'secondarycontent' );
     });

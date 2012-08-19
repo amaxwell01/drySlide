@@ -8,9 +8,17 @@
     <script>
         $(document).ready(function(){
             drySlide({
-                id           : 'drySlide',
+                id           : 'full',
                 mainSlide    : 4,
                 navigation   : true,
+                primaryContent : {
+                    speed : 500, // A string or number determining how long the animation will run
+                    type  : 'slide-left',  // Defaults to slide-left
+                },
+                secondaryContent : {
+                    speed : 1000,
+                    type  : 'slide-left'  // Defaults to fade-out
+                },
                 speed        : 200, // this is in milliseconds
                 startFrame   : 0, // the start frame activated
                 visibleCount : 7
@@ -19,34 +27,9 @@
     </script>
 </head>
 <body>
-<img src="logo" alt="drySlide logo" title="drySlide" />
-<ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="simple.html">Simple</a></li>
-    <li><a href="full.html">Full</a></li>
-</ul>
-
-<h4>Check out my other projects<h4>
-<ul>
-    <li>dryEdit.com</li>
-    <li>dryDialogs</li>
-</ul>
-
-<!-- This needs to be a red and white ribbon which is fixed to the top right of the page -->
-<a href="https://github.com/amaxwell01/drySlide" target="_blank">Fork me on Github</a>
 
 
-<!--
-    The entire page will be resonsive
-
-    Create a hero drySlide where other drySlides actually live within in
-    This needs to be a responsive design
-    
-    Display the contents of the readme.md
-    
-    
--->
-<div class="dryContentContainer" data-id="drySlide">
+<div class="dryContentContainer" data-id="full">
     <ul class="dryContent">
         <li><img src="http://placehold.it/600x400&text=slide+1" /></li>
         <li><img src="http://placehold.it/600x400&text=slide+2" /></li>
@@ -61,9 +44,12 @@
         <li><img src="http://placehold.it/600x400&text=slide+11" /></li>
         <li><img src="http://placehold.it/600x400&text=slide+12" /></li>
     </ul>
+    
+    <ul class="drySlideNavigation" data-id="full">
+    </ul>
 </div>
 
-<div class="dryCopyContentContainer" data-id="drySlide">
+<div class="dryCopyContentContainer" data-id="full">
     <ul class="dryCopyContent">
         <li>Copy Content 1</li>
         <li>Copy Content 2</li>
@@ -80,14 +66,14 @@
     </ul>
 </div>
 
-<button class="dryPreviousSlide" type="button" data-id="drySlide">Previous</button>
+<button class="dryPreviousSlide" type="button" data-id="full">Previous</button>
 
 <!-- 
 // data-current is for the start frame in the gallery
 // data-id is the dedicated ID for each drySlide deployment
 //
 -->
-<div class="drySlideContainer" data-current="0" data-id="drySlide">
+<div class="drySlideContainer" data-current="0" data-id="full">
     <ul class="drySlides">
         <li><img src="http://placehold.it/100x100&text=slide+1" /></li>
         <li><img src="http://placehold.it/100x100&text=slide+2" /></li>
@@ -104,15 +90,6 @@
     </ul>
 </div>
 
-<button class="dryNextSlide" type="button" data-id="drySlide">Next</button>
-
-<ul class="drySlideNavigation" data-id="drySlide">
-</ul>
-
-<ul>
-    <li>Follow me on Google+</li>
-    <li>Follow me on Twitter</li>
-    <li>Follow me on Githubt</li>
-</ul>
+<button class="dryNextSlide" type="button" data-id="full">Next</button>
 
 </body>

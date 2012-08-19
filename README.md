@@ -23,19 +23,19 @@ while also giving them more control on both the type of content that they add in
 
 ## Calling drySlide
     drySlide({
-        primaryContentAnimation : {
+        primaryContent : {
             slideWidth   : '350px',
             speed : [duration], // A string or number determining how long the animation will run
             transition: 'linear',
             type  : 'slide-left',  // Defaults to slide-left
         },
-        secondaryContentAnimation : {
+        secondaryContent : {
             slideWidth   : '350px',
             speed : 500,
             transition: 'linear',
             type  : 'fade-out'  // Defaults to fade-out
         },
-        sliderAnimation : {
+        slideContent : {
             slideWidth   : '350px',
             speed : 500,
             transition: 'linear',

@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title>drySlides</title>
+    <link type="text/css" rel="stylesheet" href="styles.css" />
+    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="dryslide.js"></script>
+    <script>
+        $(document).ready(function(){
+            drySlide({
+                id           : 'drySlide',
+                navigation   : true
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div id="simpleGallery">
+    <div class="dryContentContainer" data-id="drySlide">
+        <ul class="dryContent">
+            <li><img src="http://placehold.it/350x200&text=slide+1" /></li>
+            <li><img src="http://placehold.it/350x200&text=slide+2" /></li>
+            <li><img src="http://placehold.it/350x200&text=slide+3" /></li>
+            <li><img src="http://placehold.it/350x200&text=slide+4" /></li>
+            <li><img src="http://placehold.it/350x200&text=slide+5" /></li>
+        </ul>
+    </div>
+    <ul class="drySlideNavigation" data-id="drySlide">
+    </ul>
+</div>
+</body>

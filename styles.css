@@ -23,7 +23,7 @@
 
 /*=== CONTENT CONTAINER ===*/
 .dryContentContainer {
-    border: solid 1px #bada55;  /* User Set Value */
+    /*border: solid 1px #bada55;/*  /* User Set Value */
     float: left;  /* User Set Value */
     height: 200px;  /* User Set Value */
     overflow: hidden;
@@ -125,4 +125,56 @@
 }
 .drySlideNavigation li.selected {
     background: #666;  /* User Set Value */
+}
+
+
+/* Simple Gallery */
+#simpleGallery {
+    height: 202px;
+    position: relative;
+    width: 352px;
+}
+#simpleGallery .drySlideNavigation {
+    bottom: 10px;
+    position: absolute;
+    right: 8px;
+}
+#simpleGallery .drySlideNavigation li {
+    background: #fcfcfc;
+}
+#simpleGallery .drySlideNavigation li.selected {
+    background: #666;
+}
+
+
+/* Ful Gallery */
+#full_dryContentContainer {
+    height: 400px;
+    width: 600px;
+}
+#full_dryContent li {
+    height: 400px;
+    width: 600px;
+}
+#full_dryCopyContentContainer {
+    border: none;
+    height: 20px;
+    margin: 0;
+    padding: 10px 0;
+}
+#full_dryCopyContentContainer .dryCopyContent {
+    margin: 0;
+    padding: 0;
+}
+#full_drySlideNavigation {
+    bottom: 10px;
+    position: absolute;
+    right: 10px;
+    z-index: 999;
+}
+#full_drySlideNavigation li {
+    background: #fcfcfc;
+}
+#full_drySlideNavigation li.selected {
+    background: #666;
 }
