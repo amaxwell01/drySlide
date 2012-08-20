@@ -128,6 +128,46 @@
 }
 
 
+/*=== DESIGN FOR THE SAMPLES ===*/
+* {
+    font-family: Helvetica, Ariel, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header {
+    border-bottom: solid 1px #CCC;
+    height: 60px;
+}
+header #logo {
+    float: left;
+}
+header nav {
+    /*margin: 11px 0 0;*/
+}
+header nav .mainNavigation li {
+    float: left;
+    margin: 0;
+    padding: 10px 20px;
+}
+header nav .mainNavigation li a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+#forkMeBaby {
+    height: 100px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100px;
+}
+
+/* Main Article */
+article {
+    float: left;
+    width: 100%;
+}
+
 /* Simple Gallery */
 #simpleGallery {
     height: 202px;
@@ -177,4 +217,11 @@
 }
 #full_drySlideNavigation li.selected {
     background: #666;
+}
+
+footer {
+    border-top: solid 1px #CCC;
+    clear: both;
+    float: left;
+    width: 100%;
 }

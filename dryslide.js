@@ -46,13 +46,13 @@ var drySlide = function( args ) {
     var beginningSlides      = slideCount - mainSlide;
     var firstChunk           = slideCount - beginningSlides;
     var lastChunk            = slideCount - ( mainSlide - 1 );
-    var speed                = args.speed ? args.speed : 'slow';
+    var speed                = args.speed ? args.speed : 300;
     var startFrame           = args.startFrame ? args.startFrame : 0;
     var timer                = args.timer ? args.timer : false;
     var timerSpeed           = args.timerSpeed ? args.timerSpeed : 6000;
     var primaryContent       = args.primaryContent ? args.primaryContent : { type : 'slide-left', speed: 500};
-    var secondaryContent       = args.secondaryContent ? args.secondaryContent : { type : 'fade-out', speed: 500};
-    var slideContent       = args.slideContent ? args.slideContent : { type : 'none', speed: 500};
+    var secondaryContent     = args.secondaryContent ? args.secondaryContent : { type : 'fade-out', speed: 500};
+    var slideContent         = args.slideContent ? args.slideContent : { type : 'slide-left-centered', speed: 500};
     
     
     // Set the data-middle attribute on the slides
@@ -118,6 +118,74 @@ var drySlide = function( args ) {
         var moveAmount = selectedItemDistance - previousItemDistance + 'px';
         $('#' + parentID).animate({ 'left': '-' + moveAmount}, speed );
     };
+    
+    // Slide the content to the left and center the main item
+    drySlideAnimation.slideLeftCentered = function( selector, item, area ) {
+    
+        // Get the parent of the selector
+        var parentID = $(selector).parent().attr('id');
+        
+        // Get the originating slide (aka the previous slide)
+        var previousItem = 0;
+        // Get the current item
+        if( $(selector + '[data-item="' + item + '"]').hasClass('selected') ) {
+            previousItem = $(selector + '[data-item="' + item + '"]').hasClass('selected');
+        }
+        
+        var previousItemPosition = $(selector + '[data-item="' + previousItem + '"]').position();
+        var previousItemDistance = previousItemPosition.left;
+
+        
+        // Show the next item
+        $(selector).removeClass('selected');
+        $(selector + '[data-item="' + item + '"]').addClass('selected');
+        
+        // Get the selected slide
+        var selectedItem = item;
+        var selectedItemPosition = $(selector + '[data-item="' + item + '"]').position();
+        var selectedItemDistance = selectedItemPosition.left;
+        
+        // Find the distance between the two, then animate that distance
+        //var moveAmount = selectedItemDistance - previousItemDistance + 'px';
+        //$('#' + parentID).animate({ 'left': '-' + moveAmount}, speed );
+        
+        
+        // If a user jumps around in the selection, it needs to animate accordingly to fill that gap
+        // vs just animating one slide
+        // If the slide item is greater than the (slideCount - (mainSlide - 1)), only animate to (slideCount - (mainSlide - 1))
+        // If the slide item is less than the (currentSlide >= (firstChunk - 1)), only animate to (firstChunk - 1)
+        
+        var moveAmount = '';
+        if( currentSlide >= slideCount - (mainSlide - 1) ) {
+        
+            // Find the value of which the slide needs to move in order to show the last items without getting out of frame
+            moveAmount = Math.abs((currentSlide - previousItem )) * slideWidth + 'px';
+        }
+        else
+        if( currentSlide <= (firstChunk - 1) ) {
+            moveAmount = '0';
+        }
+        else {
+            moveAmount = Math.abs((currentSlide - previousItem )) * slideWidth + 'px';
+        }
+        
+        if( currentSlide > (middleSlide - 1) ) {
+            if( currentSlide < ( slideCount - ( mainSlide - 1) ) ) {
+                slideContainer.attr('data-middle', middleSlide + 1 );
+                $('#' + id + '_drySlides.drySlides').animate({ 'left': '-=' + moveAmount}, speed );
+            }
+        }
+        else
+        if( currentSlide < (middleSlide - 1) ) {
+            if( currentSlide >= (firstChunk - 1)
+              )
+            {
+                slideContainer.attr('data-middle', middleSlide - 1 );
+                $('#' + id + '_drySlides.drySlides').animate({ 'left': '+=' + moveAmount}, speed );
+            }
+        }
+    };
+    
     
     // Slide the content to the right
     drySlideAnimation.slideRight = function( selector, item, area ) {
@@ -186,39 +254,42 @@ var drySlide = function( args ) {
         // Primary animation switch
         var selectorParent = $(selector).parent().length;
 
-        switch( primaryContentAnimation.type ) {
-            case 'fade-out':
-                if( selectorParent > 0 ) {
-                    drySlideAnimation.fadeOut( selector, item, area );
-                }
-                break;
-            case 'slide-left':
-            default:
-                if( selectorParent > 0 ) {
-                    drySlideAnimation.slideLeft( selector, item, area );
-                }
-                break;
-            case 'slide-right':
-                if( selectorParent > 0 ) {
-                    drySlideAnimation.slideRight( selector, item, area );
-                }
-                break;
+        var animate = function( type ) {
+            switch( type ) {
+                case 'fade-out':
+                    if( selectorParent > 0 ) {
+                        drySlideAnimation.fadeOut( selector, item, area );
+                    }
+                    break;
+                case 'slide-left':
+                    if( selectorParent > 0 ) {
+                        drySlideAnimation.slideLeft( selector, item, area );
+                    }
+                    break;
+                case 'slide-left-centered':
+                    if( selectorParent > 0 ) {
+                        drySlideAnimation.slideLeftCentered( selector, item, area );
+                    }
+                case 'slide-right':
+                    if( selectorParent > 0 ) {
+                        drySlideAnimation.slideRight( selector, item, area );
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
+        
+        animate( primaryContent.type );
         
         if( area === 'secondarycontent' ) {
             // secondary animation switch
-            switch( secondaryContentAnimation.type ) {
-                case 'fade-out':
-                    drySlideAnimation.fadeOut( selector, item, area );
-                    break;
-                case 'slide-left':
-                default:
-                    drySlideAnimation.slideLeft( selector, item, area );
-                    break;
-                case 'slide-right':
-                    drySlideAnimation.slideRight( selector, item, area );
-                    break;
-            }
+            animate( secondaryContent.type );
+        }
+        
+        if( area === 'slidecontent' ) {
+            // secondary animation switch
+            animate( slideContent.type );
         }
     }
     
@@ -273,46 +344,9 @@ var drySlide = function( args ) {
         }
         
         // Add a window.location.hash if the user has opted into linking
-        if( args.linking.enabled ) {
+        if(  args.linking && args.linking.enabled ) {
             window.location.hash = ( parseInt(currentSlide) + 1 );
         }
-        
-        // If a user jumps around in the selection, it needs to animate accordingly to fill that gap
-        // vs just animating one slide
-        // If the slide item is greater than the (slideCount - (mainSlide - 1)), only animate to (slideCount - (mainSlide - 1))
-        // If the slide item is less than the (currentSlide >= (firstChunk - 1)), only animate to (firstChunk - 1)
-        
-        
-        
-        /* var moveAmount = '';
-        if( currentSlide >= slideCount - (mainSlide - 1) ) {
-        
-            // Find the value of which the slide needs to move in order to show the last items without getting out of frame
-            moveAmount = Math.abs((currentSlide - previousItem )) * slideWidth + 'px';
-        }
-        else
-        if( currentSlide <= (firstChunk - 1) ) {
-            moveAmount = '0';
-        }
-        else {
-            moveAmount = Math.abs((currentSlide - previousItem )) * slideWidth + 'px';
-        }
-        
-        if( currentSlide > (middleSlide - 1) ) {
-            if( currentSlide < ( slideCount - ( mainSlide - 1) ) ) {
-                slideContainer.attr('data-middle', middleSlide + 1 );
-                $('#' + id + '_drySlides.drySlides').animate({ 'left': '-=' + moveAmount}, speed );
-            }
-        }
-        else
-        if( currentSlide < (middleSlide - 1) ) {
-            if( currentSlide >= (firstChunk - 1)
-              )
-            {
-                slideContainer.attr('data-middle', middleSlide - 1 );
-                $('#' + id + '_drySlides.drySlides').animate({ 'left': '+=' + moveAmount}, speed );
-            }
-        } */
     };
     
     var nextSlide = function() {
@@ -378,12 +412,15 @@ var drySlide = function( args ) {
     // Click on a navigation dot to change tabs
     $(navigationContainer).children('li').on('click', function() {
         var itemNumber = parseInt( $(this).attr('data-item') );
+        var currentItem = parseInt( contentParent.attr('data-current') );
         
-        navigationSelection( itemNumber );
-        contentParent.attr('data-current', itemNumber );
-        selectSlideItem( itemNumber, 'button' );
-        drySlideAnimation.init( contentItemsSelector, itemNumber, 'primarycontent' );
-        drySlideAnimation.init( copyContentItemsSelector, itemNumber, 'secondarycontent' );
+        if( itemNumber !== currentItem ) {
+            navigationSelection( itemNumber );
+            contentParent.attr('data-current', itemNumber );
+            selectSlideItem( itemNumber, 'button' );
+            drySlideAnimation.init( contentItemsSelector, itemNumber, 'primarycontent' );
+            drySlideAnimation.init( copyContentItemsSelector, itemNumber, 'secondarycontent' );
+        }
     });
 
     
@@ -423,7 +460,7 @@ var drySlide = function( args ) {
     // Setup SEO friendly linkable pages
     // User the browser state API
     // Enabling Custom Linking
-    if( args.linking.enabled ) {
+    if( args.linking && args.linking.enabled ) {
         
         $('a').attr('data-name', id ).on('click', function() {
             // get clicked, pass to animate function					
