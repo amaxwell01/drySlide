@@ -124,15 +124,18 @@ var drySlide = function( args ) {
     
         // Get the parent of the selector
         var parentID = $(selector).parent().attr('id');
+
+        // Current Slide
+        var middleSlide  = parseInt( slideContainer.attr('data-middle') );
+        var slideWidth = $(slideContainer).children('.drySlides').children('li[data-item="0"]').outerWidth();
         
         // Get the originating slide (aka the previous slide)
-        var previousItem = 0;
+        var previousItem = $('#' + parentID).parent().attr('data-current') ? parseInt($('#' + parentID).parent().attr('data-current')) : 0;
+
         // Get the current item
-        if( $(selector + '[data-item="' + item + '"]').hasClass('selected') ) {
-            previousItem = $(selector + '[data-item="' + item + '"]').hasClass('selected');
-        }
+        var previousItemElement = $(selector + '[data-item="' + previousItem + '"]');
         
-        var previousItemPosition = $(selector + '[data-item="' + previousItem + '"]').position();
+        var previousItemPosition = previousItemElement.position();
         var previousItemDistance = previousItemPosition.left;
 
         
@@ -141,7 +144,6 @@ var drySlide = function( args ) {
         $(selector + '[data-item="' + item + '"]').addClass('selected');
         
         // Get the selected slide
-        var selectedItem = item;
         var selectedItemPosition = $(selector + '[data-item="' + item + '"]').position();
         var selectedItemDistance = selectedItemPosition.left;
         
@@ -155,35 +157,49 @@ var drySlide = function( args ) {
         // If the slide item is greater than the (slideCount - (mainSlide - 1)), only animate to (slideCount - (mainSlide - 1))
         // If the slide item is less than the (currentSlide >= (firstChunk - 1)), only animate to (firstChunk - 1)
         
-        var moveAmount = '';
-        if( currentSlide >= slideCount - (mainSlide - 1) ) {
-        
-            // Find the value of which the slide needs to move in order to show the last items without getting out of frame
-            moveAmount = Math.abs((currentSlide - previousItem )) * slideWidth + 'px';
+        var moveAmount = selectedItemDistance - previousItemDistance + 'px';
+
+        if( item >= slideCount - (mainSlide - 1) ) {
+            if( lastChunk <= item ) {
+                moveAmount = $('#' + parentID).css('left');
+            }
+            else {
+                moveAmount = Math.abs((item - previousItem )) * slideWidth + 'px';
+            }
         }
         else
-        if( currentSlide <= (firstChunk - 1) ) {
+        if( item <= (firstChunk - 1) ) {
             moveAmount = '0';
         }
         else {
-            moveAmount = Math.abs((currentSlide - previousItem )) * slideWidth + 'px';
+            moveAmount = selectedItemDistance - (item - (item - mainSlide ) -1) * slideWidth + 'px';
         }
         
-        if( currentSlide > (middleSlide - 1) ) {
-            if( currentSlide < ( slideCount - ( mainSlide - 1) ) ) {
+
+        /*
+        else {
+            moveAmount = Math.abs((item - previousItem )) * slideWidth + 'px';
+        }
+        
+        if( item > (middleSlide - 1) ) {
+            if( item < ( slideCount - ( mainSlide - 1) ) ) {
                 slideContainer.attr('data-middle', middleSlide + 1 );
                 $('#' + id + '_drySlides.drySlides').animate({ 'left': '-=' + moveAmount}, speed );
             }
         }
         else
-        if( currentSlide < (middleSlide - 1) ) {
-            if( currentSlide >= (firstChunk - 1)
+        if( item < (middleSlide - 1) ) {
+            if( item >= (firstChunk - 1)
               )
             {
                 slideContainer.attr('data-middle', middleSlide - 1 );
-                $('#' + id + '_drySlides.drySlides').animate({ 'left': '+=' + moveAmount}, speed );
+                $('#' + id + '_drySlides.drySlides').animate({ 'right': '+=' + moveAmount}, speed );
             }
         }
+        */
+
+        $('#' + parentID).animate({ 'left': '-' + moveAmount}, speed );
+        $('#' + parentID).parent().attr('data-current', item);
     };
     
     
@@ -196,10 +212,10 @@ var drySlide = function( args ) {
         var previousItem = 0;
         // Get the current item
         if( $(selector + '[data-item="' + item + '"]').hasClass('selected') ) {
-            previousItem = $(selector + '[data-item="' + item + '"]').hasClass('selected');
+            previousItem = $(selector + '[data-item="' + item + '"].selected');
         }
         
-        var previousItemPosition = $(selector + '[data-item="' + previousItem + '"]').position();
+        var previousItemPosition = previousItem.position();
         var previousItemDistance = previousItemPosition.left;
 
         
@@ -280,8 +296,11 @@ var drySlide = function( args ) {
             }
         }
         
-        animate( primaryContent.type );
-        
+        if( area === 'primarycontent' ) {
+            // primary animation switch
+            animate( primaryContent.type );
+        }
+
         if( area === 'secondarycontent' ) {
             // secondary animation switch
             animate( secondaryContent.type );
