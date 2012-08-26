@@ -145,7 +145,8 @@ var drySlide = function( args ) {
         
         // Get the selected slide
         var selectedItemPosition = $(selector + '[data-item="' + item + '"]').position();
-        var selectedItemDistance = selectedItemPosition.left;
+        //var selectedItemDistance = selectedItemPosition.left;
+        var selectedItemDistance = item * slideWidth;
         
         // Find the distance between the two, then animate that distance
         //var moveAmount = selectedItemDistance - previousItemDistance + 'px';
@@ -159,9 +160,15 @@ var drySlide = function( args ) {
         
         var moveAmount = selectedItemDistance - previousItemDistance + 'px';
 
+
         if( item >= slideCount - (mainSlide - 1) ) {
             if( lastChunk <= item ) {
-                moveAmount = $('#' + parentID).css('left');
+                if( previousItem <= (lastChunk - 2) ) {
+                    moveAmount = selectedItemDistance - ((selectedItemDistance - previousItemDistance) + slideWidth) + 'px';
+                }
+                else {
+                    moveAmount = item - (lastChunk - (lastChunk - 1)) * slideWidth + 'px';
+                }
             }
             else {
                 moveAmount = Math.abs((item - previousItem )) * slideWidth + 'px';
@@ -172,11 +179,17 @@ var drySlide = function( args ) {
             moveAmount = '0';
         }
         else {
-            moveAmount = selectedItemDistance - (item - (item - mainSlide ) -1) * slideWidth + 'px';
+            moveAmount = selectedItemDistance - ((item - (item - mainSlide ) - 1) * slideWidth) + 'px';
         }
-        
 
         /*
+        if( item >= slideCount - (mainSlide - 1) ) {
+            moveAmount = 0;
+        }
+        else
+        if( item <= (firstChunk - 1) ) {
+            moveAmount = '0';
+        }
         else {
             moveAmount = Math.abs((item - previousItem )) * slideWidth + 'px';
         }
@@ -199,6 +212,7 @@ var drySlide = function( args ) {
         */
 
         $('#' + parentID).animate({ 'left': '-' + moveAmount}, speed );
+        //$('#' + parentID).animate({ 'left': '-=' + moveAmount}, speed );
         $('#' + parentID).parent().attr('data-current', item);
     };
     
