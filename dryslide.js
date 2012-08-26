@@ -147,31 +147,15 @@ var drySlide = function( args ) {
         var selectedItemPosition = $(selector + '[data-item="' + item + '"]').position();
         //var selectedItemDistance = selectedItemPosition.left;
         var selectedItemDistance = item * slideWidth;
-        
-        // Find the distance between the two, then animate that distance
-        //var moveAmount = selectedItemDistance - previousItemDistance + 'px';
-        //$('#' + parentID).animate({ 'left': '-' + moveAmount}, speed );
-        
-        
-        // If a user jumps around in the selection, it needs to animate accordingly to fill that gap
-        // vs just animating one slide
-        // If the slide item is greater than the (slideCount - (mainSlide - 1)), only animate to (slideCount - (mainSlide - 1))
-        // If the slide item is less than the (currentSlide >= (firstChunk - 1)), only animate to (firstChunk - 1)
-        
-        var moveAmount = selectedItemDistance - previousItemDistance + 'px';
 
+        var moveAmount = '';
 
         if( item >= slideCount - (mainSlide - 1) ) {
-            if( lastChunk <= item ) {
-                if( previousItem <= (lastChunk - 2) ) {
-                    moveAmount = selectedItemDistance - ((selectedItemDistance - previousItemDistance) + slideWidth) + 'px';
-                }
-                else {
-                    moveAmount = item - (lastChunk - (lastChunk - 1)) * slideWidth + 'px';
-                }
+            if( previousItem <= (lastChunk - 2) ) {
+                moveAmount = (lastChunk - mainSlide) * slideWidth + 'px';
             }
             else {
-                moveAmount = Math.abs((item - previousItem )) * slideWidth + 'px';
+                moveAmount = item - (lastChunk - (lastChunk - 1)) * slideWidth + 'px';
             }
         }
         else
@@ -182,37 +166,7 @@ var drySlide = function( args ) {
             moveAmount = selectedItemDistance - ((item - (item - mainSlide ) - 1) * slideWidth) + 'px';
         }
 
-        /*
-        if( item >= slideCount - (mainSlide - 1) ) {
-            moveAmount = 0;
-        }
-        else
-        if( item <= (firstChunk - 1) ) {
-            moveAmount = '0';
-        }
-        else {
-            moveAmount = Math.abs((item - previousItem )) * slideWidth + 'px';
-        }
-        
-        if( item > (middleSlide - 1) ) {
-            if( item < ( slideCount - ( mainSlide - 1) ) ) {
-                slideContainer.attr('data-middle', middleSlide + 1 );
-                $('#' + id + '_drySlides.drySlides').animate({ 'left': '-=' + moveAmount}, speed );
-            }
-        }
-        else
-        if( item < (middleSlide - 1) ) {
-            if( item >= (firstChunk - 1)
-              )
-            {
-                slideContainer.attr('data-middle', middleSlide - 1 );
-                $('#' + id + '_drySlides.drySlides').animate({ 'right': '+=' + moveAmount}, speed );
-            }
-        }
-        */
-
-        $('#' + parentID).animate({ 'left': '-' + moveAmount}, speed );
-        //$('#' + parentID).animate({ 'left': '-=' + moveAmount}, speed );
+        $('#' + parentID).animate({ 'left': '-' + moveAmount}, slideContent.speed );
         $('#' + parentID).parent().attr('data-current', item);
     };
     
