@@ -3,7 +3,7 @@
 * Intructions: https://github.com/amaxwell01/drySlide
 * By: Andrew Maxwell, http://www.andrewcmaxwell.com
 * Version: 0.1
-* Updated: Auguest 5th, 2012
+* Updated: Auguest 26th, 2012
 */
 
 var drySlide = function( args ) {
@@ -29,6 +29,7 @@ var drySlide = function( args ) {
     var contentItemsSelector = '#' + id + '_dryContent.dryContent li';
     var contentItems         = $(contentItemsSelector);
     var contentItemsCount    = $(contentItemsSelector).length;
+    var copyContent          = '#' + id + '_dryCopyContent.dryCopyContent';
     var copyContentItemsSelector = '#' + id + '_dryCopyContent.dryCopyContent li';
     var copyContentItems     = $(copyContentItemsSelector);
     var linking              = args.linking ? args.linking : {
@@ -40,6 +41,7 @@ var drySlide = function( args ) {
     var navigation           = args.navigation ? args.navigation : false;
     var navigationContainer  = $('#' + id + '_drySlideNavigation');
     var slideContainer       = $('#' + id + '_drySlideContainer.drySlideContainer');
+    var slide                = '#' + id + '_drySlides.drySlides';
     var slideItemsSelector   = '#' + id + '_drySlides.drySlides li';
     var slideItems           = $(slideItemsSelector);
     var slideCount           = slideItems.length;
@@ -59,17 +61,17 @@ var drySlide = function( args ) {
     slideContainer.attr('data-middle', mainSlide );
     
     // Iterate over all of the slide items and give them a data-item number
-    $.each(slideItems, function( index, value ) {
+    $.each( $(slide).children('li'), function( index, value ) {
         $(value).attr('data-item', index)
     });
     
     // Iterate over all of the content items and give them a data-item number
-    $.each(contentItems, function( index, value ) {
+    $.each( $(content).children('li'), function( index, value ) {
         $(value).attr('data-item', index)
     });
     
     // Iterate over all of the content items and give them a data-item number
-    $.each(copyContentItems, function( index, value ) {
+    $.each( $(copyContent).children('li'), function( index, value ) {
         $(value).attr('data-item', index)
     });
     
@@ -223,11 +225,9 @@ var drySlide = function( args ) {
         });
         
         // Hide all content items
-        $(selector).removeClass('selected');
         $(selector).fadeOut(500);
         
         // Show the content for the given slide
-        $(selector + '[data-item="' + item + '"]').addClass('selected');
         $(selector + '[data-item="' + item + '"]').fadeIn(500);
         return true;
     };
@@ -449,7 +449,7 @@ var drySlide = function( args ) {
     // Enabling Custom Linking
     if( args.linking && args.linking.enabled ) {
         
-        $('a').attr('data-name', id ).on('click', function() {
+        $('a[data-id="' + id " '"]').on('click', function() {
             // get clicked, pass to animate function					
             var clicked = $(this).attr('href').match('[^#/]+$') - 1;
             var current = contentParent.attr('data-current');
