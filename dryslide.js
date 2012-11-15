@@ -449,7 +449,7 @@ var drySlide = function( args ) {
     // Enabling Custom Linking
     if( args.linking && args.linking.enabled ) {
         
-        $('a[data-id="' + id " '"]').on('click', function() {
+        $('a[data-id="' + id + " '"]').on('click', function() {
             // get clicked, pass to animate function					
             var clicked = $(this).attr('href').match('[^#/]+$') - 1;
             var current = contentParent.attr('data-current');
