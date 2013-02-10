@@ -32,48 +32,64 @@ while also giving them more control on both the type of content that they add in
 
 
 ## Calling drySlide
-    drySlide({
-        primaryContent : {
-            slideWidth   : '350px',
-            speed : [duration], // A string or number determining how long the animation will run
-            transition: 'linear',
-            type  : 'slide-left',  // Defaults to slide-left
-        },
-        secondaryContent : {
-            slideWidth   : '350px',
-            speed : 500,
-            transition: 'linear',
-            type  : 'fade-out'  // Defaults to fade-out
-        },
-        slideContent : {
-            slideWidth   : '350px',
-            speed : 500,
-            transition: 'linear',
-            type  : 'slide-left', // Defaults to slide-left
-            visibleCount : 7
-        }
-        id           : 'hockey', // This can be anything, but must start with a alphabetic character
-        linking      : {
-            enabled  : true, // Defaults to false
-            customURL : true // Defaults to false
-        },
-        loop         : true, //defaults to false
-        speed        : 400, // this is in milliseconds, defaults to 500ms, this is used for ALL sections that have a speed
-        startFrame   : 0, // the start frame activated or you can use the start check from above
-        startFrame   : drySlideStart,
-        navigation   : true,
-        mainSlide    : 4,
-        timer        : true, // defaults to false
-        timerSpeed   : 5000 // defaults to 6000ms
-    });
+```javascript
+drySlide({
+    primaryContent: {
+        slideWidth: '350px',
+        speed: [duration], // A string or number determining how long the animation will run
+        transition: 'linear',
+        type: 'slide-left',  // Defaults to slide-left
+    },
+    secondaryContent: {
+        slideWidth: '350px',
+        speed: 500,
+        transition: 'linear',
+        type: 'fade-out'  // Defaults to fade-out
+    },
+    slideContent : {
+        slideWidth   : '350px',
+        speed : 500,
+        transition: 'linear',
+        type  : 'slide-left', // Defaults to slide-left
+        visibleCount : 7
+    }
+    id: 'hockey', // This can be anything, but must start with a alphabetic character
+    itemCount: true
+    linking: {
+        enabled: true, // Defaults to false
+        customURL: true // Defaults to false
+    },
+    loop: true, //defaults to false
+    speed: 400, // this is in milliseconds, defaults to 500ms, this is used for ALL sections that have a speed
+    startFrame: 0, // the start frame activated or you can use the start check from above
+    startFrame: drySlideStart,
+    navigation: true,
+    mainSlide: 4,
+    timer: true, // defaults to false
+    timerSpeed: 5000 // defaults to 6000ms
+});
+```
+
+# Properties
+itemCount (boolean):
+```
+itemCount:TRUE
+
+or
+
+itemCount: FALSE
+```
+
 
     
 ## Main Content
-    <div class="dryContentContainer" data-id="<insert id here>">
-        <ul class="dryContent">
-            <li></li>
-        </ul>
-    </div>
+```html
+<div class="dryContentContainer" data-id="<insert id here>">
+    <ul class="dryContent">
+        <li></li>
+    </ul>
+</div>
+```
 
 
 ## Copy Content aka Secondary Content
@@ -101,6 +117,15 @@ while also giving them more control on both the type of content that they add in
     <ul class="drySlideNavigation" data-id="<insert id here>">
     </ul>
 
+
+## Item Count
+```html
+// Current Item Count
+<div class="dryCurrentCount" data-id="<insert id here>"></div>
+
+// Total Item Count
+<div class="dryTotalCount" data-id="<insert id here>"></div>
+```
 
 
 Variable options

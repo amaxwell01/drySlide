@@ -3,7 +3,7 @@
 * Intructions: https://github.com/amaxwell01/drySlide
 * By: Andrew Maxwell, http://www.andrewcmaxwell.com
 * Version: 0.1
-* Updated: Auguest 26th, 2012
+* Updated: February 10th, 2013
 */
 
 var drySlide = function( args ) {
@@ -425,6 +425,7 @@ var drySlide = function( args ) {
             drySlideAnimation.init( copyContentItemsSelector, i, 'secondarycontent' );
             selectSlideItem( i, 'button' );
             navigationSelection( i );
+            renderSlideCount();
             
             // Increment the count
             i++;
@@ -450,7 +451,7 @@ var drySlide = function( args ) {
     if( args.linking && args.linking.enabled ) {
         
         $('a[data-id="' + id + '"]').on('click', function() {
-            // get clicked, pass to animate function					
+            // get clicked, pass to animate function                    
             var clicked = $(this).attr('href').match('[^#/]+$') - 1;
             var current = contentParent.attr('data-current');
             
@@ -463,5 +464,19 @@ var drySlide = function( args ) {
                 drySlideAnimation.init( copyContentItemsSelector, clicked, 'secondarycontent' );
             }
         });
+    }
+
+
+    // Slide Counters
+    var renderSlideCount = function() {
+        var current = parseInt( contentParent.attr('data-current') ) + 1;
+        var total = parseInt( contentItemsCount );
+
+        $('.dryCurrentCount[data-id="' + id + '"]').text( current );
+        $('.dryTotalCount[data-id="' + id + '"]').text( total );
+    }
+
+    if ( args.itemCount ) {
+        renderSlideCount();
     }
 };
