@@ -144,6 +144,10 @@ var drySlide = function( args ) {
             drySlideAnimation.init( copyContentItemsSelector, 0, 'secondarycontent' );
             navigationSelection( 0 );
         }
+
+        if ( args.itemCount ) {
+            renderSlideCount();
+        }
     };
     
     //assign an onclick function to the previous and next buttons
