@@ -74,7 +74,77 @@ var drySlide = function( args ) {
     $.each( $(copyContent).children('li'), function( index, value ) {
         $(value).attr('data-item', index)
     });
+
+    // Navigation selection
+    var navigationSelection = function( itemNumber )
+    {
+        // Change the class to selected for the clicked on navigation dot
+        $(navigationContainer).children('li').removeClass('selected');
+        
+        // Add the selected class to listen elementFromPoint
+        $(navigationContainer).children('li[data-item="' + itemNumber + '"]').addClass('selected');
+    }
+
+    var previousSlide = function() {
+        var currentSlide   = parseInt(contentParent.attr('data-current'));
+        
+        if( currentSlide > 0 )
+        {
+            contentParent.attr('data-current', currentSlide);
+            selectSlideItem( currentSlide - 1, 'button' );
+            drySlideAnimation.init( contentItemsSelector, currentSlide - 1, 'primarycontent' );
+            drySlideAnimation.init( copyContentItemsSelector, currentSlide - 1, 'secondarycontent' );
+            navigationSelection( currentSlide - 1 );
+        }
+    };
     
+    var selectSlideItem = function( currentSlide, call ) {
+        var middle = mainSlide - 1;
+        var middleSlide = parseInt( slideContainer.attr('data-middle') );
+        
+        var previousItem = parseInt( $(content).children('li.selected').attr('data-item') );
+        var slideWidth = $(slideContainer).children('.drySlides').children('li[data-item="0"]').outerWidth();
+        
+        drySlideAnimation.init( slideItemsSelector, currentSlide, 'slidecontent' );
+        
+        // Remove the select class from all items
+        $(slideItems).removeClass('selected');
+
+        // Add the selected class to the selected slide           
+        $( slideItems[ currentSlide ] ).addClass('selected');
+        
+        contentParent.attr('data-current', currentSlide );
+        
+        // If the user has enabled navigation
+        if( navigation ) {
+            navigationSelection( currentSlide );
+        }
+        
+        // Add a window.location.hash if the user has opted into linking
+        if(  args.linking && args.linking.enabled ) {
+            window.location.hash = ( parseInt(currentSlide) + 1 );
+        }
+    };
+    
+    var nextSlide = function() {
+        var currentSlide   = parseInt(contentParent.attr('data-current')) + 1;
+        
+        if ( currentSlide < contentItemsCount ) {
+            contentParent.attr('data-current', currentSlide + 1 );
+            selectSlideItem( currentSlide, 'button' );
+            drySlideAnimation.init( contentItemsSelector, currentSlide, 'primarycontent' );
+            drySlideAnimation.init( copyContentItemsSelector, currentSlide, 'secondarycontent' );
+            navigationSelection( currentSlide );
+        }
+        else
+        if ( currentSlide === contentItemsCount ) {
+            contentParent.attr('data-current', 0 );
+            selectSlideItem( 0, 'button' );
+            drySlideAnimation.init( contentItemsSelector, 0, 'primarycontent' );
+            drySlideAnimation.init( copyContentItemsSelector, 0, 'secondarycontent' );
+            navigationSelection( 0 );
+        }
+    };
     
     //assign an onclick function to the previous and next buttons
     $('#' + id + '_dryPreviousSlide.dryPreviousSlide').on('click', function() {
@@ -292,65 +362,6 @@ var drySlide = function( args ) {
     drySlideAnimation.init( contentItemsSelector, startFrame, 'primarycontent' );
     drySlideAnimation.init( copyContentItemsSelector, startFrame, 'secondarycontent' );
     
-    
-    
-    var previousSlide = function() {
-        var currentSlide   = parseInt(contentParent.attr('data-current'));
-        
-        if( currentSlide > 0 )
-        {
-            contentParent.attr('data-current', currentSlide);
-            selectSlideItem( currentSlide - 1, 'button' );
-            drySlideAnimation.init( contentItemsSelector, currentSlide - 1, 'primarycontent' );
-            drySlideAnimation.init( copyContentItemsSelector, currentSlide - 1, 'secondarycontent' );
-            navigationSelection( currentSlide - 1 );
-        }
-    };
-    
-    
-    var selectSlideItem = function( currentSlide, call ) {
-        var middle = mainSlide - 1;
-        var middleSlide = parseInt( slideContainer.attr('data-middle') );
-        
-        var previousItem = parseInt( $(content).children('li.selected').attr('data-item') );
-        var slideWidth = $(slideContainer).children('.drySlides').children('li[data-item="0"]').outerWidth();
-        
-        drySlideAnimation.init( slideItemsSelector, currentSlide, 'slidecontent' );
-        
-        // Remove the select class from all items
-        $(slideItems).removeClass('selected');
-
-        // Add the selected class to the selected slide           
-        $( slideItems[ currentSlide ] ).addClass('selected');
-        
-        contentParent.attr('data-current', currentSlide );
-        
-        // If the user has enabled navigation
-        if( navigation ) {
-            navigationSelection( currentSlide );
-        }
-        
-        // Add a window.location.hash if the user has opted into linking
-        if(  args.linking && args.linking.enabled ) {
-            window.location.hash = ( parseInt(currentSlide) + 1 );
-        }
-    };
-    
-    var nextSlide = function() {
-        var currentSlide   = parseInt(contentParent.attr('data-current')) + 1;
-        
-        if( currentSlide < contentItemsCount )
-        {
-            contentParent.attr('data-current', currentSlide + 1 );
-            selectSlideItem( currentSlide, 'button' );
-            drySlideAnimation.init( contentItemsSelector, currentSlide, 'primarycontent' );
-            drySlideAnimation.init( copyContentItemsSelector, currentSlide, 'secondarycontent' );
-            navigationSelection( currentSlide );
-        }
-    };
-    
-    
-    
     // Add the onclick function to each slide item
     slideItems.on('click', function( event ) {
         var that = $(this);
@@ -385,16 +396,6 @@ var drySlide = function( args ) {
     
     
     /*=== NAVIGATION DOTS ===*/
-    
-    // Navigation selection
-    var navigationSelection = function( itemNumber )
-    {
-        // Change the class to selected for the clicked on navigation dot
-        $(navigationContainer).children('li').removeClass('selected');
-        
-        // Add the selected class to listen elementFromPoint
-        $(navigationContainer).children('li[data-item="' + itemNumber + '"]').addClass('selected');
-    }
     
     // Click on a navigation dot to change tabs
     $(navigationContainer).children('li').on('click', function() {
