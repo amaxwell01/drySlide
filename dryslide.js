@@ -170,7 +170,7 @@ var drySlide = function( args ) {
         var previousItem = 0;
         // Get the current item
         if( $(selector + '[data-item="' + item + '"]').hasClass('selected') ) {
-            previousItem = $(selector + '[data-item="' + item + '"]').hasClass('selected');
+            previousItem = $(selector + '[data-item="' + item + '"].selected').prev().attr('data-item');
         }
         
         var previousItemPosition = $(selector + '[data-item="' + previousItem + '"]').position();
