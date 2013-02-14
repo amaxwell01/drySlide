@@ -75,6 +75,19 @@ var drySlide = function( args ) {
         $(value).attr('data-item', index)
     });
 
+    // Slide Counters
+    var renderSlideCount = function() {
+        var current = parseInt( contentParent.attr('data-current') ) + 1;
+        var total = parseInt( contentItemsCount );
+
+        $('.dryCurrentCount[data-id="' + id + '"]').text( current );
+        $('.dryTotalCount[data-id="' + id + '"]').text( total );
+    }
+
+    if ( args.itemCount ) {
+        renderSlideCount();
+    }
+
     // Navigation selection
     var navigationSelection = function( itemNumber )
     {
@@ -469,19 +482,5 @@ var drySlide = function( args ) {
                 drySlideAnimation.init( copyContentItemsSelector, clicked, 'secondarycontent' );
             }
         });
-    }
-
-
-    // Slide Counters
-    var renderSlideCount = function() {
-        var current = parseInt( contentParent.attr('data-current') ) + 1;
-        var total = parseInt( contentItemsCount );
-
-        $('.dryCurrentCount[data-id="' + id + '"]').text( current );
-        $('.dryTotalCount[data-id="' + id + '"]').text( total );
-    }
-
-    if ( args.itemCount ) {
-        renderSlideCount();
     }
 };
