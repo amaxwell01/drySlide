@@ -77,7 +77,7 @@ var drySlide = function( args ) {
 
     // Slide Counters
     var renderSlideCount = function() {
-        var current = parseInt( contentParent.attr('data-current') ) + 1;
+        var current = contentParent.attr('data-current') ? parseInt( contentParent.attr('data-current') ) + 1 : startFrame + 1;
         var total = parseInt( contentItemsCount );
 
         $('.dryCurrentCount[data-id="' + id + '"]').text( current );
