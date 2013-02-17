@@ -2,7 +2,7 @@ drySlide, A Gallery Plugin for jQuery
 Intructions: https://github.com/amaxwell01/drySlide
 By: Andrew Maxwell, http://www.andrewcmaxwell.com
 Version: 0.1
-Updated: August 6th, 2012
+Updated: February 17th, 2013
 
 
 Q: What does drySlide stand for?:  
@@ -23,37 +23,31 @@ while also giving them more control on both the type of content that they add in
 # How To Use drySlide
 
 ## Capturing the static URL's for linking
+```javascript
     // Set starting slide to 0
     var drySlideStart = 0;
     // Get slide number if it exists
     if (window.location.hash) {
         drySlideStart = window.location.hash.replace('#','');
     }
-
+```
 
 ## Calling drySlide
 ```javascript
 drySlide({
     primaryContent: {
-        slideWidth: '350px',
         speed: [duration], // A string or number determining how long the animation will run
-        transition: 'linear',
         type: 'slide-left',  // Defaults to slide-left
     },
     secondaryContent: {
-        slideWidth: '350px',
         speed: 500,
-        transition: 'linear',
         type: 'fade-out'  // Defaults to fade-out
     },
     slideContent : {
-        slideWidth   : '350px',
         speed : 500,
-        transition: 'linear',
         type  : 'slide-left', // Defaults to slide-left
-        visibleCount : 7
     }
-    id: 'hockey', // This can be anything, but must start with a alphabetic character
+    id: 'unicorn', // This can be anything, but must start with a alphabetic character
     itemCount: true
     linking: {
         enabled: true, // Defaults to false
@@ -93,30 +87,33 @@ itemCount: FALSE
 
 
 ## Copy Content aka Secondary Content
-    <div class="dryCopyContentContainer" data-id="<insert id here>">
-        <ul class="dryCopyContent">            
-            <li></li>
-        </ul>
-    </div>
-
+```html
+<div class="dryCopyContentContainer" data-id="<insert id here>">
+    <ul class="dryCopyContent">            
+        <li></li>
+    </ul>
+</div>
+```
 
 ## Slide Content
-    <div class="drySlideContainer" data-id="<insert id here>" data-middle="4">
-        <ul class="drySlides">
-            <li></li>
-        </ul>
-    </div>
-
+```html
+<div class="drySlideContainer" data-id="<insert id here>" data-middle="4">
+    <ul class="drySlides">
+        <li></li>
+    </ul>
+</div>
+```
 
 ## Previous and Next Buttons
-    <button class="dryPreviousSlide" type="button" data-id="<insert id here>">Previous Photo</button>
-    <button class="dryNextSlide" type="button" data-id="<insert id here>">Next Photo</button>
-
+```html
+<button class="dryPreviousSlide" type="button" data-id="<insert id here>">Previous Photo</button>
+<button class="dryNextSlide" type="button" data-id="<insert id here>">Next Photo</button>
+```
 
 ## Navigation Dots
-    <ul class="drySlideNavigation" data-id="<insert id here>">
-    </ul>
-
+```html
+<ul class="drySlideNavigation" data-id="<insert id here>"></ul>
+```
 
 ## Item Count
 ```html

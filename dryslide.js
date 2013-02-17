@@ -75,6 +75,32 @@ var drySlide = function( args ) {
         $(value).attr('data-item', index)
     });
 
+    var spacialDifference = function( container, itemsWrapper ) {
+        return container.outerWidth() - itemsWrapper.outerWidth();
+    }
+
+    var centerSliderSlides = function() {
+        var slidesWidth = 0;
+        var slideWrapper = $(slide);
+        var slideContainerWidth = slideContainer.outerWidth();
+        var spacialDifference = 0;
+
+        // Get the width of the first slide
+        slidesWidth = slideItems.eq(0).outerWidth() * slideCount;
+
+        if ( slidesWidth < slideContainerWidth ) {
+
+            spacialDifference = slideContainerWidth - slidesWidth;
+            slideWrapper.css('margin-left', spacialDifference / 2);
+        } else {
+            slideWrapper.css('margin-left', '');
+        }
+    };
+
+    if ( slideCount ) {
+        centerSliderSlides();
+    }
+
     // Slide Counters
     var renderSlideCount = function() {
         var current = contentParent.attr('data-current') ? parseInt( contentParent.attr('data-current') ) + 1 : startFrame + 1;
@@ -89,8 +115,7 @@ var drySlide = function( args ) {
     }
 
     // Navigation selection
-    var navigationSelection = function( itemNumber )
-    {
+    var navigationSelection = function( itemNumber ) {
         // Change the class to selected for the clicked on navigation dot
         $(navigationContainer).children('li').removeClass('selected');
         
@@ -250,8 +275,8 @@ var drySlide = function( args ) {
         var selectedItemPosition = $(selector + '[data-item="' + item + '"]').position();
         //var selectedItemDistance = selectedItemPosition.left;
         var selectedItemDistance = item * slideWidth;
-
         var moveAmount = '';
+        var itemsWidth = $(selector).eq(0).outerWidth() * $(selector).length;
 
         if( item >= slideCount - (mainSlide - 1) ) {
             if( previousItem <= (lastChunk - 2) ) {
@@ -269,7 +294,14 @@ var drySlide = function( args ) {
             moveAmount = selectedItemDistance - ((item - (item - mainSlide ) - 1) * slideWidth) + 'px';
         }
 
-        $('#' + parentID).animate({ 'left': '-' + moveAmount}, slideContent.speed );
+        if ( area === 'slidecontent' ) {
+            if ( itemsWidth > $('#' + parentID).parent().outerWidth() ) {
+                $('#' + parentID).animate({ 'left': '-' + moveAmount}, slideContent.speed );
+            }
+        } else {
+            $('#' + parentID).animate({ 'left': '-' + moveAmount}, slideContent.speed );
+        }
+
         $('#' + parentID).parent().attr('data-current', item);
     };
     
