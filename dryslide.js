@@ -185,9 +185,21 @@ var drySlide = function( args ) {
         
         // Get the originating slide (aka the previous slide)
         var previousItem = 0;
+
+        // @TODO Check which area it is
         // Get the current item
         if( $(selector + '[data-item="' + item + '"]').hasClass('selected') ) {
-            previousItem = $(selector + '[data-item="' + item + '"].selected').prev().attr('data-item');
+
+            switch( area ) {
+                case 'primarycontent':
+                    previousItem = $(selector + '[data-item="' + item + '"].selected').parent().parent();
+                    break;
+                case '':
+                    previousItem = $(selector + '[data-item="' + item + '"].selected').prev().attr('data-item');
+                    break;
+                default:
+                    console.log('No area provided');
+            }
         }
         
         var previousItemPosition = $(selector + '[data-item="' + previousItem + '"]').position();
@@ -209,6 +221,8 @@ var drySlide = function( args ) {
     };
     
     // Slide the content to the left and center the main item
+    // Center the main item based on the container if under the width of the
+    // visible area
     drySlideAnimation.slideLeftCentered = function( selector, item, area ) {
     
         // Get the parent of the selector
