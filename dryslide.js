@@ -196,6 +196,20 @@ var drySlide = function( args ) {
     $('#' + id + '_dryNextSlide.dryNextSlide').on('click', function() {
         nextSlide();
     });
+
+    var centerMiddleSlide = function() {
+        // Highlight the center slide
+        // Get the width of the visible area for the slide container
+        var slideContainerWidth = slideContainer.width();
+
+        // Get the width of each slide
+        var slideWidth = slideContainer.find('li').eq(0).width();
+
+        // Offset the slide inside of the slide container so that it is centered
+        var centerLocation = slideContainerWidth - slideWidth / 2;
+
+        // Run this code during the window.resize   
+    }
     
     
     /*=== ANIMATION CONTROLS ===*/
