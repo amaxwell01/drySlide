@@ -53,7 +53,7 @@ var drySlide = function( args ) {
     var timer                = args.timer ? args.timer : false;
     var timerSpeed           = args.timerSpeed ? args.timerSpeed : 6000;
     var primaryContent       = args.primaryContent ? args.primaryContent : { type : 'slide-left', speed: 500};
-    var secondaryContent     = args.secondaryContent ? args.secondaryContent : { type : 'fade-out', speed: 500, centerMiddleSlide: false};
+    var secondaryContent     = args.secondaryContent ? args.secondaryContent : { type : 'fade-out', speed: 500};
     var slideContent         = args.slideContent ? args.slideContent : { type : 'slide-left-centered', speed: 500};
     
     
@@ -196,35 +196,6 @@ var drySlide = function( args ) {
     $('#' + id + '_dryNextSlide.dryNextSlide').on('click', function() {
         nextSlide();
     });
-
-    // A responsive way to center images 
-    var centerMiddleSlide = function() {
-        
-        // Get the width of the visible container
-        var containerWidth = slideContainer.width();
-
-        // Get the currently selected side
-        var selectedSlide = slideContainer.find('.selected');
-        var selectedSlideWidth = selectedSlide.width();
-        var selectedSlidePosition = selectedSlide.position();
-
-        // Find the offset of the container
-        var offset = selectedSlide.parent().css('left');
-            offset = parseInt(offset.replace('px','') );
-
-        // Get the new center location ( perfectly centers )
-        var newCenter = containerWidth + selectedSlideWidth / 2;
-
-        // Get the left position of the selected slide - offset
-        var newOffset = selectedSlidePosition.left - offset;
-
-        // Make sure that the first slide is never too far right 
-        // before centering
-        if ( offset >= 0 ) {
-            selectedSlide.parent().css('left', newOffset );
-            console.log( 'center the middle slide' );
-        }
-    };
 
     var concealedSlides = function() {
         // Get the width of the container
