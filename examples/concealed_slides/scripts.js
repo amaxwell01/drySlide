@@ -1,6 +1,6 @@
 $(function() {
     drySlide({
-        id: 'responsive_1',
+        id: 'concealed',
         navigation: true,
         startFrame: 0,
         secondaryContent: {
