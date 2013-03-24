@@ -1,0 +1,212 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: pink;
+    float: left;
+    height: 100px;
+    width: 100%;
+}
+
+section {
+    float: left;
+    width: 25%;
+}
+
+.left_one {
+    background: orange;
+    float: left;
+    height: 200px;
+    width: 100%;
+}
+
+.left_two {
+    background: tan;
+    clear: left;
+    float: left;
+    height: 200px;
+    width: 100%;
+}
+
+article {
+    background: #bada55;
+    float: left;
+    height: 400px;
+    width: 50%;
+}
+
+.right {
+    background: blue;
+    float: right;
+    height: 400px;
+    width: 25%;
+}
+
+
+
+
+
+
+
+/*=== CONTENT CONTAINER ===*/
+.dryContentContainer {
+    /*border: solid 1px #bada55;/*  /* User Set Value */
+    float: left;  /* User Set Value */
+    height: 200px;  /* User Set Value */
+    overflow: hidden;
+    position: relative;
+    width: 350px;  /* User Set Value */
+}
+
+.dryContent {
+    height: 400px;  /* User Set Value */
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 999999px;
+}
+
+.dryContent li {
+    display: block;
+    float: left;
+    height: 200px; /* User Set Value */
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 350px; /* User set value */
+}
+
+.dryContent li.selected {}
+
+.drySlideContainer {
+    border: solid 2px #CCC;  /* User Set Value */
+    float: left;
+    height: 102px;  /* User Set Value */
+    overflow: hidden;
+    position: relative;
+    width: 350px;  /* User Set Value */
+}
+
+.drySlides {
+    height: 120px;  /* User Set Value */
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 900px;
+}
+
+.drySlides li {
+    border: solid 1px transparent;  /* User Set Value */
+    display: inline-block;
+    float: left;
+    height: 100px;  /* User Set Value */
+    opacity: .5;  /* User Set Value */
+    width: 100px;  /* User Set Value */
+}
+
+.drySlides li.selected {
+    border: solid 1px transparent;
+    opacity: 1;
+}
+
+/*=== NAVIGATION ===*/
+.drySlideNavigation {
+    float: left;  /* User Set Value */
+    margin: 0;
+    padding: 0;
+}
+
+.drySlideNavigation li {
+    background: #CCC;  /* User Set Value */
+    webkit-border-radius: 5px;  /* User Set Value */
+    border-radius: 5px;  /* User Set Value */
+    cursor: pointer;  /* User Set Value */
+    display: inline-block;
+    height: 10px;  /* User Set Value */
+    margin: 0 5px 0 0;  /* User Set Value */
+    padding: 0;
+    width: 10px;  /* User Set Value */
+}
+
+.drySlideNavigation li.selected {
+    background: #666;  /* User Set Value */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 770px) {
+    header {
+        background: pink;
+        float: left;
+        height: 100px;
+        width: 100%;
+    }
+
+    .left_one {
+        background: orange;
+        display: none;
+        float: left;
+        height: 200px;
+        width: 100%;
+    }
+    .left_two {
+        background: tan;
+        display: none;
+        float: left;
+        height: 200px;
+        width: 100%;
+    }
+
+    article {
+        background: #bada55;
+        float: left;
+        height: 400px;
+        width: 100%;
+    }
+
+    .right {
+        background: dark-blue;
+        float: left;
+        height: 400px;
+        width: 100%;
+    }
+
+    .dryContentContainer {
+        /*border: solid 1px #bada55;/*  /* User Set Value */
+        float: left;  /* User Set Value */
+        height: 200px;  /* User Set Value */
+        overflow: hidden;
+        position: relative;
+        width: 200px;  /* User Set Value */
+    }
+    .dryContent {
+        height: 400px;  /* User Set Value */
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        width: 999999px;
+    }
+    .dryContent li {
+        display: block;
+        float: left;
+        height: 200px; /* User Set Value */
+        margin: 0;
+        padding: 0;
+        position: relative;
+        width: 200px; /* User set value */
+    }
+}

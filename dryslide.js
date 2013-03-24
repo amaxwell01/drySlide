@@ -225,6 +225,41 @@ var drySlide = function( args ) {
             console.log( 'center the middle slide' );
         }
     };
+
+    var concealedSlides = function() {
+        // Get the width of the container
+        var container = $('#container');
+        var containerWidth = container.width();
+
+        // Get the width of each slide
+        var slides = $('li');
+        var numberOfSlides = slides.length;
+        var singleSlideWidth = slides.eq(0).width();
+
+        // Get the width of all slides added together
+        var totalSlidesWidth = numberOfSlides * singleSlideWidth;
+        var previousButton = '';
+        var nextButton = '';
+
+
+        // Hide the arrows if the width of the slides is narrower than its container
+        if ( totalSlidesWidth < containerWidth ) {
+
+            // Hide the arrow keys / add class
+            previousButton.removeClass('open');
+            nextButton.removeClass('open');
+            previousButton.addClass('covered');
+            nextButton.addClass('covered');
+
+        } else {
+
+            // Show the arrow keys / remove class
+            previousButton.removeClass('covered');
+            nextButton.removeClass('covered');
+            previousButton.addClass('open');
+            nextButton.addClass('open');
+        }
+    };
     
     
     /*=== ANIMATION CONTROLS ===*/
