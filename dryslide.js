@@ -24,6 +24,7 @@ var drySlide = function( args ) {
 
 
     // Set variables
+    var concealed = args.concealed ? args.concealed : false;
     var content              = $('#' + id + '_dryContent.dryContent');
     var contentParent        = content.parent();
     var contentItemsSelector = '#' + id + '_dryContent.dryContent li';
@@ -165,38 +166,39 @@ var drySlide = function( args ) {
 
     var concealedSlides = function() {
         // Get the width of the container
-        var container = $('#container');
-        var containerWidth = container.width();
+        var containerWidth = slideContainer.width();
 
         // Get the width of each slide
-        var slides = $('li');
-        var numberOfSlides = slides.length;
-        var singleSlideWidth = slides.eq(0).width();
+        var singleSlideWidth = slideItems.eq(0).width();
 
         // Get the width of all slides added together
-        var totalSlidesWidth = numberOfSlides * singleSlideWidth;
-        var previousButton = '';
-        var nextButton = '';
+        var totalSlidesWidth = slideCount * singleSlideWidth;
+        var previousButton = $('#' + id + '_dryPreviousSlide.dryPreviousSlide');
+        var nextButton = $('#' + id + '_dryNextSlide.dryNextSlide');
 
 
         // Hide the arrows if the width of the slides is narrower than its container
         if ( totalSlidesWidth < containerWidth ) {
 
             // Hide the arrow keys / add class
-            previousButton.removeClass('open');
-            nextButton.removeClass('open');
-            previousButton.addClass('covered');
-            nextButton.addClass('covered');
-
-        } else {
-
-            // Show the arrow keys / remove class
             previousButton.removeClass('covered');
             nextButton.removeClass('covered');
             previousButton.addClass('open');
             nextButton.addClass('open');
+
+        } else {
+
+            // Show the arrow keys / remove class
+            previousButton.removeClass('open');
+            nextButton.removeClass('open');
+            previousButton.addClass('covered');
+            nextButton.addClass('covered');
         }
     };
+
+    if ( args.concealed ) {
+        concealedSlides();
+    }
     
     //assign an onclick function to the previous and next buttons
     $('#' + id + '_dryPreviousSlide.dryPreviousSlide').on('click', function() {
@@ -510,6 +512,35 @@ var drySlide = function( args ) {
             }
             
         },timerSpeed);
+    }
+
+    var responsive = function() {
+
+        var updatePosition = function() {
+            var slide = $('.customDialog');
+            var name;
+
+            $.each( dialogs, function( key, value ) {
+                name = $(value).attr('data-name');
+                dialog.position({ name: name });
+            });
+        };
+
+        // Center the dialog when resizing
+        $(window).resize( function() {
+            if( timer ) {
+                clearTimeout(timer);
+            }
+         
+            var timer = setTimeout( function() {
+                updatePosition();
+            }, 100 );    
+        });
+    }
+
+
+    if ( args.responsive ) {
+        responsive();
     }
     
     // Setup SEO friendly linkable pages
