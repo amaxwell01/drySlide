@@ -53,7 +53,7 @@ var drySlide = function( args ) {
     var timer                = args.timer ? args.timer : false;
     var timerSpeed           = args.timerSpeed ? args.timerSpeed : 6000;
     var primaryContent       = args.primaryContent ? args.primaryContent : { type : 'slide-left', speed: 500};
-    var secondaryContent     = args.secondaryContent ? args.secondaryContent : { type : 'fade-out', speed: 500};
+    var secondaryContent     = args.secondaryContent ? args.secondaryContent : { type : 'fade-out', speed: 500, centerMiddleSlide: false};
     var slideContent         = args.slideContent ? args.slideContent : { type : 'slide-left-centered', speed: 500};
     
     
@@ -197,19 +197,34 @@ var drySlide = function( args ) {
         nextSlide();
     });
 
+    // A responsive way to center images 
     var centerMiddleSlide = function() {
-        // Highlight the center slide
-        // Get the width of the visible area for the slide container
-        var slideContainerWidth = slideContainer.width();
+        
+        // Get the width of the visible container
+        var containerWidth = slideContainer.width();
 
-        // Get the width of each slide
-        var slideWidth = slideContainer.find('li').eq(0).width();
+        // Get the currently selected side
+        var selectedSlide = slideContainer.find('.selected');
+        var selectedSlideWidth = selectedSlide.width();
+        var selectedSlidePosition = selectedSlide.position();
 
-        // Offset the slide inside of the slide container so that it is centered
-        var centerLocation = slideContainerWidth - slideWidth / 2;
+        // Find the offset of the container
+        var offset = selectedSlide.parent().css('left');
+            offset = parseInt(offset.replace('px','') );
 
-        // Run this code during the window.resize   
-    }
+        // Get the new center location ( perfectly centers )
+        var newCenter = containerWidth + selectedSlideWidth / 2;
+
+        // Get the left position of the selected slide - offset
+        var newOffset = selectedSlidePosition.left - offset;
+
+        // Make sure that the first slide is never too far right 
+        // before centering
+        if ( offset >= 0 ) {
+            selectedSlide.parent().css('left', newOffset );
+            console.log( 'center the middle slide' );
+        }
+    };
     
     
     /*=== ANIMATION CONTROLS ===*/
@@ -289,7 +304,7 @@ var drySlide = function( args ) {
         var selectedItemPosition = $(selector + '[data-item="' + item + '"]').position();
         //var selectedItemDistance = selectedItemPosition.left;
         var selectedItemDistance = item * slideWidth;
-        var moveAmount = '';
+        var moveAmount;
         var itemsWidth = $(selector).eq(0).outerWidth() * $(selector).length;
 
         if( item >= slideCount - (mainSlide - 1) ) {
@@ -352,8 +367,6 @@ var drySlide = function( args ) {
     
     // Fade content over the previous item
     drySlideAnimation.fadeOut = function( selector, item, area ) {
-        
-
         switch( area ) {
             case copyContentItems:
                 //speed = secondaryContent.speed;
@@ -419,6 +432,12 @@ var drySlide = function( args ) {
         if( area === 'secondarycontent' ) {
             // secondary animation switch
             animate( secondaryContent.type );
+
+            // center the slides
+
+            if ( args.secondaryContent.centerMiddleSlide ) {
+                centerMiddleSlide();
+            }
         }
         
         if( area === 'slidecontent' ) {
