@@ -4,6 +4,7 @@ $(function() {
         startFrame: 0,
         mainSlide: 3,
         responsive: {
+            enabled: true,
             mainSlide: true
         }
     });

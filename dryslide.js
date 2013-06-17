@@ -53,6 +53,7 @@ var drySlide = function( args ) {
     var timer                = args.timer ? args.timer : false;
     var timerSpeed           = args.timerSpeed ? args.timerSpeed : 6000;
     var primaryContent       = args.primaryContent ? args.primaryContent : { type : 'slide-left', speed: 500};
+    var responsive           = args.responsive ? args.responsive : {enabled: false};
     var secondaryContent     = args.secondaryContent ? args.secondaryContent : { type : 'fade-out', speed: 500};
     var slideContent         = args.slideContent ? args.slideContent : { type : 'slide-left-centered', speed: 500};
 
@@ -129,6 +130,7 @@ var drySlide = function( args ) {
 
         /* ==========================================================================
            Get Move Amount
+           * @param <object> parent
            * @param <Int> item
            * @param <Int> slideCount
            * @param <Int> mainSlide
@@ -141,6 +143,9 @@ var drySlide = function( args ) {
            ========================================================================== */
         getMoveAmount: function( args ) {
             var moveAmount;
+
+            // get the latest mainSlide
+            args.mainSlide = slideContainer.attr('data-middle');
 
             if( args.item >= args.slideCount - (args.mainSlide - 1) ) {
                 if( args.previousItem <= (args.lastChunk - 2) ) {
@@ -162,6 +167,10 @@ var drySlide = function( args ) {
         getSlideWidth: function( slide ) {
             var slideWidth = slide.outerWidth(true);
             return slideWidth;
+        },
+
+        getMiddleSlide: function( parent, ID ) {
+            parent.attr('data-middle', ID);
         },
 
         getMiddleSlideID: function( parent ) {
@@ -292,6 +301,10 @@ var drySlide = function( args ) {
         // Set the Current Slide ID
         setCurrentSlideID: function( parent, ID ) {
             parent.attr('data-current', ID);
+        },
+
+        setMiddleSlide: function( parent, ID ) {
+            parent.attr('data-middle', ID);
         },
 
         selectSlideItem: function( currentSlide, call ) {
@@ -468,7 +481,6 @@ var drySlide = function( args ) {
     });
 
     /*=== SLIDE NAVIGATION ===*/
-
     // Show the navigation dots for the number of slides
     if( navigation ) {
         for( var i = 0; i < contentItems.length; i++ ) {
@@ -499,8 +511,12 @@ var drySlide = function( args ) {
         }
     });
 
-    /*=== TIMER ===*/
+    /*=== Responsive Controls ===*/
+    if ( responsive.enabled ) {
+        dryslide.getMiddleSlide( slideContainer );
+    }
 
+    /*=== TIMER ===*/
     // Create a timer which can play through all of the slides
     if( timer ) {
         var i = 0;
