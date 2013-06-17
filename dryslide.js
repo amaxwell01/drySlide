@@ -171,11 +171,12 @@ var drySlide = function( args ) {
 
         // Run the selected animation
         init: function( selector, item, area ) {
+            var selectorParent, animate;
 
             // Primary animation switch
-            var selectorParent = $(selector).parent().length;
+            selectorParent = $(selector).parent().length;
 
-            var animate = function( type ) {
+            animate = function( type ) {
                 switch( type ) {
                     case 'fade-out':
                         if( selectorParent > 0 ) {
@@ -246,7 +247,7 @@ var drySlide = function( args ) {
         },
 
         nextSlide: function() {
-            var currentSlide   = parseInt(contentParent.attr('data-current'), 10) + 1;
+            var currentSlide = parseInt(contentParent.attr('data-current'), 10) + 1;
 
             if ( currentSlide < contentItemsCount ) {
                 contentParent.attr('data-current', currentSlide + 1 );
@@ -268,7 +269,7 @@ var drySlide = function( args ) {
         },
 
         previousSlide: function() {
-            var currentSlide   = parseInt(contentParent.attr('data-current'), 10);
+            var currentSlide = parseInt(contentParent.attr('data-current'), 10);
 
             if ( currentSlide > 0 ) {
                 contentParent.attr('data-current', currentSlide);
@@ -281,8 +282,8 @@ var drySlide = function( args ) {
 
         // Slide Counters
         renderSlideCount: function() {
-            var current = contentParent.attr('data-current') ? parseInt( contentParent.attr('data-current'), 10 ) + 1 : startFrame + 1;
-            var total = parseInt( contentItemsCount, 10 );
+            var current = contentParent.attr('data-current') ? parseInt( contentParent.attr('data-current'), 10 ) + 1 : startFrame + 1,
+                total = parseInt( contentItemsCount, 10 );
 
             $('.dryCurrentCount[data-id="' + id + '"]').text( current );
             $('.dryTotalCount[data-id="' + id + '"]').text( total );
@@ -294,10 +295,10 @@ var drySlide = function( args ) {
         },
 
         selectSlideItem: function( currentSlide, call ) {
-            var middle = mainSlide - 1;
-            var middleSlide = parseInt( slideContainer.attr('data-middle'), 10 );
-            var previousItem = parseInt( $(content).children('li.selected').attr('data-item'), 10 );
-            var slideWidth = $(slideContainer).children('.drySlides').children('li[data-item="0"]').outerWidth();
+            var middle = mainSlide - 1,
+                middleSlide = parseInt( slideContainer.attr('data-middle'), 10 ),
+                previousItem = parseInt( $(content).children('li.selected').attr('data-item'), 10 ),
+                slideWidth = $(slideContainer).children('.drySlides').children('li[data-item="0"]').outerWidth();
 
             dryslide.init( slideItemsSelector, currentSlide, 'slidecontent' );
 
@@ -322,12 +323,14 @@ var drySlide = function( args ) {
 
         // Slide the content to the left
         slideLeft: function( selector, item, area ) {
+            var parentID, previousItem, previousItemPosition, previousItemDistance,
+            selectedItem, selectedItemPosition, selectedItemDistance, moveAmount;
 
             // Get the parent of the selector
-            var parentID = $(selector).parent().attr('id');
+            parentID = $(selector).parent().attr('id');
 
             // Get the originating slide (aka the previous slide)
-            var previousItem = 0;
+            previousItem = 0;
 
             // @TODO Check which area it is
             // Get the current item
@@ -345,20 +348,20 @@ var drySlide = function( args ) {
                 }
             }
 
-            var previousItemPosition = $(selector + '[data-item="' + previousItem + '"]').position();
-            var previousItemDistance = previousItemPosition.left;
+            previousItemPosition = $(selector + '[data-item="' + previousItem + '"]').position();
+            previousItemDistance = previousItemPosition.left;
 
             // Show the next item
             $(selector).removeClass('selected');
             $(selector + '[data-item="' + item + '"]').addClass('selected');
 
             // Get the selected slide
-            var selectedItem = item;
-            var selectedItemPosition = $(selector + '[data-item="' + item + '"]').position();
-            var selectedItemDistance = selectedItemPosition.left;
+            selectedItem = item;
+            selectedItemPosition = $(selector + '[data-item="' + item + '"]').position();
+            selectedItemDistance = selectedItemPosition.left;
 
             // Find the distance between the two, then animate that distance
-            var moveAmount = selectedItemDistance - previousItemDistance + 'px';
+            moveAmount = selectedItemDistance - previousItemDistance + 'px';
             $('#' + parentID).animate({ 'left': '-' + moveAmount}, speed );
         },
 
@@ -412,30 +415,33 @@ var drySlide = function( args ) {
 
         // Slide the content to the right
         slideRight: function( selector, item, area ) {
+            var parentID, previousItem, previousItemPosition, previousItemDistance,
+            selectedItem, selectedItemPosition, selectedItemDistance, moveAmount;
+
             // Get the parent of the selector
-            var parentID = $(selector).parent().attr('id');
+            parentID = $(selector).parent().attr('id');
 
             // Get the originating slide (aka the previous slide)
-            var previousItem = 0;
+            previousItem = 0;
             // Get the current item
             if( $(selector + '[data-item="' + item + '"]').hasClass('selected') ) {
                 previousItem = $(selector + '[data-item="' + item + '"].selected');
             }
 
-            var previousItemPosition = previousItem.position();
-            var previousItemDistance = previousItemPosition.left;
+            previousItemPosition = previousItem.position();
+            previousItemDistance = previousItemPosition.left;
 
             // Show the next item
             $(selector).removeClass('selected');
             $(selector + '[data-item="' + item + '"]').addClass('selected');
 
             // Get the selected slide
-            var selectedItem = item;
-            var selectedItemPosition = $(selector + '[data-item="' + item + '"]').position();
-            var selectedItemDistance = selectedItemPosition.left;
+            selectedItem = item;
+            selectedItemPosition = $(selector + '[data-item="' + item + '"]').position();
+            selectedItemDistance = selectedItemPosition.left;
 
             // Find the distance between the two, then animate that distance
-            var moveAmount = selectedItemDistance - previousItemDistance + 'px';
+            moveAmount = selectedItemDistance - previousItemDistance + 'px';
             $('#' + parentID).animate({ 'right': '-' + moveAmount}, speed );
         }
     };
