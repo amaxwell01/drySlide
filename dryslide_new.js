@@ -1,51 +1,79 @@
-;(function ( $, window, document, undefined ) {
+;(function(window, document, $, undefine) {
 
-    // Create the defaults once
-    var pluginName = "defaultPluginName",
-        defaults = {
-            propertyName: "value"
+    var userSettings;
+
+    // Safety net for browsers that don't support Array.isArray()
+    if(!Array.isArray) {
+        Array.isArray = function (vArg) {
+            return Object.prototype.toString.call(vArg) === "[object Array]";
         };
-
-    // The actual plugin constructor
-    function Plugin( element, options ) {
-        this.element = element;
-
-        // jQuery has an extend method which merges the contents of two or
-        // more objects, storing the result in the first object. The first object
-        // is generally empty as we don't want to alter the default options for
-        // future instances of the plugin
-        this.options = $.extend( {}, defaults, options );
-
-        this._defaults = defaults;
-        this._name = pluginName;
-
-        this.init();
     }
 
-    Plugin.prototype = {
+    var dryslide = {
 
-        init: function() {
-            // Place initialization logic here
-            // You already have access to the DOM element and
-            // the options via the instance, e.g. this.element
-            // and this.options
-            // you can add more functions like the one below and
-            // call them like so: this.yourOtherFunction(this.element, this.options).
+        create: function( args ) {
+            var self = this;
+            var newValues;
+            var listItems;
+
+            var defaultSettings = {
+                enabled: true
+            };
+
+            if ( args ) {
+                userSettings = $.extend(defaultSettings, args);
+            }
+
+            if ( userSettings.name ) {
+                userSettings.element = $('[data-dryname="' + userSettings.name + '"]');
+                userSettings.element.attr('id', (userSettings.name + '_container') );
+                self.collection[ userSettings.name ] = userSettings;
+            }
+
+            // Update the selectable values to the new DOM
+            listItems = self.newSelectDOM( userSettings.name );
+
+            userSettings.element.append( newValues );
+            self.enableSelection( userSettings.name );
         },
 
-        yourOtherFunction: function(el, options) {
-            // some logic
+        // Store all models in the collection
+        collection: {},
+
+        count: function( args ) {
+            var dryslideContainer = $('#' + args.name + '_container');
+            var selectOptions = dryslideContainer.find('li.selected');
+            var count = 0;
+            var i = 0;
+
+            for ( i = 0; i < selectOptions.length; i++ ) {
+                count++;
+            }
+
+            return count;
+        },
+
+        // Get the values, both selected and non-selected in an object
+        get: function(args) {
+            $.extend(true, dryslide.collection[ args.name ], args);
+            var currentCollection = dryslide.collection[ args.name ];
+            var dryslideContainer = currentCollection.element;
+
+            return items;
+        },
+
+        select: function( args ) {
+
+        },
+
+        set: function(args) {
+            var self = this;
+            //var dryselectContainer = $('#' + args.name + '_container');
+            $.extend(true, dryslide.collection[ args.name ], args);
+            var currentCollection = dryslide.collection[ args.name ];
+            var dryslideContainer = currentCollection.element;
         }
     };
 
-    // A really lightweight plugin wrapper around the constructor,
-    // preventing against multiple instantiations
-    $.fn[pluginName] = function ( options ) {
-        return this.each(function () {
-            if (!$.data(this, "plugin_" + pluginName)) {
-                $.data(this, "plugin_" + pluginName, new Plugin( this, options ));
-            }
-        });
-    };
-
-})( jQuery, window, document );
+    window.dryslide = dryslide;
+})(window, document, jQuery);
