@@ -91,6 +91,53 @@ var drySlide = function( args ) {
     /*=== ANIMATION CONTROLS ===*/
     var dryslide = {
 
+        // Transition between photos by sliding up a colored overlay,
+        // the overlay is the same width and height as the container
+        // transition: 'color-up'
+        colorTransitionUp: function(selector, item, area) {
+            var newArea = null;
+            var colorUpDiv = $(selector).parent().parent().find('.dryslide_color_up');
+
+            switch ( area ) {
+            default:
+            case 'primarycontent':
+                newArea = 'primaryContent';
+                break;
+            }
+
+            // Create a new transition DOM element which sits inside 
+            // of the area, hidden from view
+            if ( !colorUpDiv.length ) {
+                $(selector).parent().parent().append('<div class="dryslide_color_up"></div>');
+            }
+
+            // Specify the color in the CSS
+            // [X] CHECK
+
+            // Check to see if the browser has transform, if so, use 
+            // CSS, otherwise use jQuery to animate
+
+            // Get the width and height of the window area and assign 
+            // it to the new transition DOM element
+            var width = $(selector).parent().parent().width();
+            var height = $(selector).parent().parent().height();
+
+            $(selector).parent().parent().find('.dryslide_color_up').css({
+                width: width,
+                height: height
+            });
+
+            // Look at using CSS animations in the CSS to do the 
+            // transitions instead of having them within the javascript
+            var toggleClass = window.setTimeout(function() {
+                $(selector).parent().parent().find('.dryslide_color_up').addClass('animate');
+                clearTimeout(toggleClass);
+            }, 10);
+
+            // $(selector).parent().parent().find('.dryslide_color_up');
+            $(selector).parent().parent().find('.dryslide_color_up').removeClass('animate');
+        },
+
         // Fade content over the previous item
         fadeOut: function( selector, item, area ) {
 
@@ -187,6 +234,11 @@ var drySlide = function( args ) {
 
             animate = function( type ) {
                 switch( type ) {
+                    case 'color-up':
+                        if( selectorParent > 0 ) {
+                            dryslide.colorTransitionUp( selector, item, area );
+                        }
+                        break;
                     case 'fade-out':
                         if( selectorParent > 0 ) {
                             dryslide.fadeOut( selector, item, area );
@@ -485,12 +537,9 @@ var drySlide = function( args ) {
     if( navigation ) {
         for( var i = 0; i < contentItems.length; i++ ) {
             // Add the selected Class to the startFrame
-            if( i === startFrame )
-            {
+            if ( i === startFrame ) {
                 $(navigationContainer).append( '<li data-item=' + i + ' class="selected"></li>');
-            }
-            else
-            {
+            } else {
                 $(navigationContainer).append( '<li data-item=' + i + '></li>');
             }
         }
