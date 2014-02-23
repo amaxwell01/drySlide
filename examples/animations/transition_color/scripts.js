@@ -4,7 +4,8 @@ $(function() {
         navigation: true,
         startFrame: 0,
         primaryContent: {
-            type: 'color-up'
+            type: 'color-up',
+            speed: 600
         }
     });
 });

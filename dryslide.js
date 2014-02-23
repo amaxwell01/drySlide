@@ -95,8 +95,14 @@ var drySlide = function( args ) {
         // the overlay is the same width and height as the container
         // transition: 'color-up'
         colorTransitionUp: function(selector, item, area) {
+            var self = this;
+            var selectorContainer = $(selector).parent().parent();
+            var colorUpDiv = selectorContainer.find('.dryslide_color_up');
+            var width = selectorContainer.width();
+            var height = selectorContainer.height();
             var newArea = null;
-            var colorUpDiv = $(selector).parent().parent().find('.dryslide_color_up');
+            var toggleClass = null;
+            var changeImage = null;
 
             switch ( area ) {
             default:
@@ -108,34 +114,39 @@ var drySlide = function( args ) {
             // Create a new transition DOM element which sits inside 
             // of the area, hidden from view
             if ( !colorUpDiv.length ) {
-                $(selector).parent().parent().append('<div class="dryslide_color_up"></div>');
+                selectorContainer.append('<div class="dryslide_color_up"></div>');
+                colorUpDiv = selectorContainer.find('.dryslide_color_up');
             }
 
-            // Specify the color in the CSS
-            // [X] CHECK
-
-            // Check to see if the browser has transform, if so, use 
+            // @TODO - Check to see if the browser has transform, if so, use 
             // CSS, otherwise use jQuery to animate
 
             // Get the width and height of the window area and assign 
             // it to the new transition DOM element
-            var width = $(selector).parent().parent().width();
-            var height = $(selector).parent().parent().height();
-
-            $(selector).parent().parent().find('.dryslide_color_up').css({
+            colorUpDiv.css({
                 width: width,
                 height: height
             });
 
             // Look at using CSS animations in the CSS to do the 
             // transitions instead of having them within the javascript
-            var toggleClass = window.setTimeout(function() {
-                $(selector).parent().parent().find('.dryslide_color_up').addClass('animate');
+            toggleClass = window.setTimeout(function() {
+                colorUpDiv.addClass('animate');
                 clearTimeout(toggleClass);
             }, 10);
 
-            // $(selector).parent().parent().find('.dryslide_color_up');
-            $(selector).parent().parent().find('.dryslide_color_up').removeClass('animate');
+            colorUpDiv.removeClass('animate');
+
+            // Change the image after the set time interval
+            // Show the next item
+            changeImage = window.setTimeout(function() {
+                $(selector).removeClass('selected');
+                $(selector + '[data-item="' + item + '"]').addClass('selected');
+                clearTimeout(changeImage);
+            }, args[newArea].speed);
+
+            self.setCurrentSlideID( selectorContainer, item );
+            return true;
         },
 
         // Fade content over the previous item

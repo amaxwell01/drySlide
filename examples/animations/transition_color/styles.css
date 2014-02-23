@@ -42,12 +42,15 @@ section {
     float: left;
     height: 200px; /* User Set Value */
     margin: 0;
+    opacity: 0;
     padding: 0;
     position: relative;
     width: 350px; /* User set value */
 }
 
-.dryContent li.selected {}
+.dryContent li.selected {
+    opacity: 1;
+}
 
 .drySlideContainer {
     border: solid 2px #CCC;  /* User Set Value */
@@ -68,19 +71,6 @@ section {
     width: 900px;
 }
 
-.drySlides li {
-    border: solid 1px transparent;  /* User Set Value */
-    display: inline-block;
-    float: left;
-    height: 100px;  /* User Set Value */
-    opacity: .5;  /* User Set Value */
-    width: 100px;  /* User Set Value */
-}
-
-.drySlides li.selected {
-    border: solid 1px transparent;
-    opacity: 1;
-}
 
 /*=== NAVIGATION ===*/
 .drySlideNavigation {
@@ -105,14 +95,6 @@ section {
     background: #666;  /* User Set Value */
 }
 
-
-header {
-    background: pink;
-    float: left;
-    height: 100px;
-    width: 100%;
-}
-
 article {
     background: #EAEAEC;
     float: left;
@@ -127,7 +109,7 @@ article {
     margin: 0 auto;
     overflow: hidden;
     position: relative;
-    width: 100%;  /* User Set Value */
+    width: 974px;  /* User Set Value */
 }
 .dryContent {
     height: 630px;  /* User Set Value */
@@ -140,10 +122,17 @@ article {
     display: block;
     float: left;
     height: 630px; /* User Set Value */
+    left: 0;
     margin: 0;
+    opacity: 0;
     padding: 0;
-    position: relative;
+    position: absolute;
+    top: 0;
     width: 100%; /* User set value */
+}
+
+.dryContent li.selected {
+    opacity: 1;
 }
 
 @keyframes colorUp {
