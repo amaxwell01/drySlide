@@ -183,13 +183,12 @@ Variable options
 /* COLOR UP TRANSITION */
 .dryslide_color_up {
     background-color: #830051;
-    animation: colorUp 4s;
-    -webkit-animation: colorUp 4s;
-    opacity: 1;
+    opacity: 0;
 }
 
-.dryslide_color_up.done {
-    opacity: 0;
+.dryslide_color_up.animate {
+    animation: colorUp 2s;
+    -webkit-animation: colorUp 2s;
 }
 
 
