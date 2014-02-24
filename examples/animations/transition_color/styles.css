@@ -1,0 +1,193 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: pink;
+    float: left;
+    height: 100px;
+    width: 100%;
+}
+
+section {
+    float: left;
+    width: 25%;
+}
+
+
+
+
+/*=== CONTENT CONTAINER ===*/
+.dryContentContainer {
+    /*border: solid 1px #bada55;/*  /* User Set Value */
+    float: left;  /* User Set Value */
+    height: 200px;  /* User Set Value */
+    overflow: hidden;
+    position: relative;
+    width: 350px;  /* User Set Value */
+}
+
+.dryContent {
+    height: 400px;  /* User Set Value */
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 999999px;
+}
+
+.dryContent li {
+    display: block;
+    float: left;
+    height: 200px; /* User Set Value */
+    margin: 0;
+    opacity: 0;
+    padding: 0;
+    position: relative;
+    width: 350px; /* User set value */
+}
+
+.dryContent li.selected {
+    opacity: 1;
+}
+
+.drySlideContainer {
+    border: solid 2px #CCC;  /* User Set Value */
+    float: left;
+    height: 102px;  /* User Set Value */
+    overflow: hidden;
+    position: relative;
+    width: 350px;  /* User Set Value */
+}
+
+.drySlides {
+    height: 120px;  /* User Set Value */
+    left: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 900px;
+}
+
+
+/*=== NAVIGATION ===*/
+.drySlideNavigation {
+    float: left;  /* User Set Value */
+    margin: 0;
+    padding: 0;
+}
+
+.drySlideNavigation li {
+    background: #CCC;  /* User Set Value */
+    webkit-border-radius: 5px;  /* User Set Value */
+    border-radius: 5px;  /* User Set Value */
+    cursor: pointer;  /* User Set Value */
+    display: inline-block;
+    height: 10px;  /* User Set Value */
+    margin: 0 5px 0 0;  /* User Set Value */
+    padding: 0;
+    width: 10px;  /* User Set Value */
+}
+
+.drySlideNavigation li.selected {
+    background: #666;  /* User Set Value */
+}
+
+article {
+    background: #EAEAEC;
+    float: left;
+    height: 630px;
+    width: 100%;
+}
+
+.dryContentContainer {
+    /*border: solid 1px #bada55;/*  /* User Set Value */
+    float: left;  /* User Set Value */
+    height: 630px;  /* User Set Value */
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    width: 974px;  /* User Set Value */
+}
+.dryContent {
+    height: 630px;  /* User Set Value */
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 999999px;
+}
+.dryContent li {
+    display: block;
+    float: left;
+    height: 630px; /* User Set Value */
+    left: 0;
+    margin: 0;
+    opacity: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 100%; /* User set value */
+}
+
+.dryContent li.selected {
+    opacity: 1;
+}
+
+@keyframes colorUp {
+    0% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+    }
+    98% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+    99% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+    }
+}
+
+@-webkit-keyframes colorUp {
+    0% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+    }
+    98% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+    99% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+    }
+}
+
+/* COLOR UP TRANSITION */
+.dryslide_color_up {
+    background-color: #830051;
+    opacity: 0;
+}
+
+.dryslide_color_up.animate {
+    animation: colorUp 2s;
+    -webkit-animation: colorUp 2s;
+}

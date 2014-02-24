@@ -76,7 +76,7 @@ itemCount: FALSE
 
 
     
-## Main Content
+## Primary Content
 ```html
 <div class="dryContentContainer" data-id="<insert id here>">
     <ul class="dryContent">
@@ -127,9 +127,70 @@ itemCount: FALSE
 
 Variable options
 ### drySlide.primaryContentAnimation.type
+* 'color-up'
 * 'slide-left'
 * 'slide-right'
 * 'fade-out'
+
+
+### color-up class
+@keyframes colorUp {
+    0% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+    }
+    98% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+    99% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+    }
+}
+
+@-webkit-keyframes colorUp {
+    0% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+    }
+    98% {
+        opacity: 1;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+    99% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+    }
+}
+
+/* COLOR UP TRANSITION */
+.dryslide_color_up {
+    background-color: #830051;
+    opacity: 0;
+}
+
+.dryslide_color_up.animate {
+    animation: colorUp 2s;
+    -webkit-animation: colorUp 2s;
+}
+
 
 ### drySlide.primaryContentAnimation.speed
 * 0 - 9999999999999 (This is in milliseconds. You can have it run longer than 9999999999999 if you really wanted, but why would you? This is 316.88 years)

@@ -91,6 +91,64 @@ var drySlide = function( args ) {
     /*=== ANIMATION CONTROLS ===*/
     var dryslide = {
 
+        // Transition between photos by sliding up a colored overlay,
+        // the overlay is the same width and height as the container
+        // transition: 'color-up'
+        colorTransitionUp: function(selector, item, area) {
+            var self = this;
+            var selectorContainer = $(selector).parent().parent();
+            var colorUpDiv = selectorContainer.find('.dryslide_color_up');
+            var width = selectorContainer.width();
+            var height = selectorContainer.height();
+            var newArea = null;
+            var toggleClass = null;
+            var changeImage = null;
+
+            switch ( area ) {
+            default:
+            case 'primarycontent':
+                newArea = 'primaryContent';
+                break;
+            }
+
+            // Create a new transition DOM element which sits inside 
+            // of the area, hidden from view
+            if ( !colorUpDiv.length ) {
+                selectorContainer.append('<div class="dryslide_color_up"></div>');
+                colorUpDiv = selectorContainer.find('.dryslide_color_up');
+            }
+
+            // @TODO - Check to see if the browser has transform, if so, use 
+            // CSS, otherwise use jQuery to animate
+
+            // Get the width and height of the window area and assign 
+            // it to the new transition DOM element
+            colorUpDiv.css({
+                width: width,
+                height: height
+            });
+
+            // Look at using CSS animations in the CSS to do the 
+            // transitions instead of having them within the javascript
+            toggleClass = window.setTimeout(function() {
+                colorUpDiv.addClass('animate');
+                clearTimeout(toggleClass);
+            }, 10);
+
+            colorUpDiv.removeClass('animate');
+
+            // Change the image after the set time interval
+            // Show the next item
+            changeImage = window.setTimeout(function() {
+                $(selector).removeClass('selected');
+                $(selector + '[data-item="' + item + '"]').addClass('selected');
+                clearTimeout(changeImage);
+            }, args[newArea].speed);
+
+            self.setCurrentSlideID( selectorContainer, item );
+            return true;
+        },
+
         // Fade content over the previous item
         fadeOut: function( selector, item, area ) {
 
@@ -187,6 +245,11 @@ var drySlide = function( args ) {
 
             animate = function( type ) {
                 switch( type ) {
+                    case 'color-up':
+                        if( selectorParent > 0 ) {
+                            dryslide.colorTransitionUp( selector, item, area );
+                        }
+                        break;
                     case 'fade-out':
                         if( selectorParent > 0 ) {
                             dryslide.fadeOut( selector, item, area );
@@ -485,12 +548,9 @@ var drySlide = function( args ) {
     if( navigation ) {
         for( var i = 0; i < contentItems.length; i++ ) {
             // Add the selected Class to the startFrame
-            if( i === startFrame )
-            {
+            if ( i === startFrame ) {
                 $(navigationContainer).append( '<li data-item=' + i + ' class="selected"></li>');
-            }
-            else
-            {
+            } else {
                 $(navigationContainer).append( '<li data-item=' + i + '></li>');
             }
         }
